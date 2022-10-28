@@ -1,0 +1,5 @@
+hibernate\entities\loai.class
+hibernate\entities\Main.class
+hibernate\entities\Category.class
+hibernate\entities\Product.class
+hibernate\utils\HibernateUtils.class
