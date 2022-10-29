@@ -30,6 +30,61 @@ public class Main {
        listProduct.forEach(s-> System.out.println(s.toString()));
 
     }
+    public static void listCustomer( ) {
+        Session session = factory.openSession();
+        List listProduct = null;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            listProduct = session.createQuery("FROM Customer ").list();
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        listProduct.forEach(s-> System.out.println(s.toString()));
+
+    }
+    public static void listOrder( ) {
+        Session session = factory.openSession();
+        List listProduct = null;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            listProduct = session.createQuery("FROM Order ").list();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        listProduct.forEach(s-> System.out.println(s.toString()));
+
+    }
+    public static void listOrderDetail( ) {
+        Session session = factory.openSession();
+        List listProduct = null;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            listProduct = session.createQuery("FROM OrderDetail ").list();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        listProduct.forEach(s-> System.out.println(s.toString()));
+
+    }
     public static void main(String[] args) {
        /* assert factory != null;
         Session session= factory.openSession();
@@ -39,7 +94,10 @@ public class Main {
         loai.setName("trungbanbanh");
         session.save(loai);
         tx.commit();*/
-        Main.listProduct();
+
+        //  Main.listProduct();
+       // Main.listCustomer();
+         Main.listOrder();
 
 
     }

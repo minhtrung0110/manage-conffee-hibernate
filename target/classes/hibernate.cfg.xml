@@ -9,7 +9,7 @@
 
         <!-- Thông tin kết nối db -->
         <property name="hibernate.connection.url">
-            jdbc:mysql://localhost/coffeemanagement
+            jdbc:mysql://localhost/coffeestore
         </property>
         <property name="hibernate.connection.username">
             root
@@ -18,7 +18,9 @@
         </property>
         <mapping class="hibernate.entities.Product"/>
         <mapping class="hibernate.entities.Category"/>
-
+        <mapping class="hibernate.entities.Customer"/>
+        <mapping class="hibernate.entities.Order"/>
+        <mapping class="hibernate.entities.OrderDetail"/>
     </session-factory>
 </hibernate-configuration>
 

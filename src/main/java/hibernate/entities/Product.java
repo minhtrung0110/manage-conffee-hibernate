@@ -1,9 +1,18 @@
 package hibernate.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
+import java.util.Set;
+
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString()
 
 @Entity
 @Table(name = "sanpham")
+@NoArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +29,7 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "amount",nullable=true)
+    @Column(name = "amount",nullable=false)
     private int amount;
 
     @Column(name = "price")
@@ -29,72 +38,12 @@ public class Product {
     @Column(name = "img")
     private String image;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Product(){
-
-    }
-
-    public Product(int id,  String name, String description, int amount, float price, String image) {
-        this.id = id;
-
-        this.name = name;
-        this.description = description;
-        this.amount = amount;
-        this.price = price;
-        this.image = image;
-    }
-
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
+    @OneToMany(mappedBy = "product",fetch=FetchType.EAGER)
+    private Set<OrderDetail> OrderDetail;
 
     @Override
     public String toString() {
-        return this.name+" - "+this.category.getName()+" - "+this.description+ " - "+this.amount+ " - "+this.price;
+        return "Product(id=" + id + ", name=" + name + ", description=" + description+" , price="+price+", img="+image+" )";
     }
+
 }
