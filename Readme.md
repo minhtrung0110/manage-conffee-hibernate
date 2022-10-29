@@ -30,6 +30,7 @@ jcalendar-1.4
 lombook
 hiberbernate-core
 hiberbernate-annotation
+javassist
 ```
 
 ## Hướng dẫn cài đặt
@@ -38,11 +39,11 @@ Phần mềm chạy tốt trên nền tảng java version 18 với jdk version 1
 
 
 ```
-1. Tạo database "coffee" và import file coffeee.sql vào phpadmin trên XAMPP .
+1. Tạo database "coffeestore" và import file data/coffeestore.sql vào phpadmin trên XAMPP .
 ```
 
 ```
-2. Import tất cả các thư viện trong thư mục /libs/ .
+2. Import tất cả các thư viện trong thư mục /libs/ nếu có .
 ```
 
 ```
@@ -51,7 +52,14 @@ Phần mềm chạy tốt trên nền tảng java version 18 với jdk version 1
 
 ```
 4. Buil project sau đó run application để sử dụng được chương trình .
-```
+
+   Mỗi khi bạn thay đổi thủ công tệp pom.xml  bạn cần tải các thay đổi. IntelliJ IDEA thường sẽ hiển thị biểu tượng thông báo ở phần bên phải của trình chỉnh sửa đề xuất Tải 
+   các thay đổi Maven được thực hiện cho dự án ( Ctrl+Shift+O).
+````
+#### Tài liệu hướng dẫn cấu hình với Intellij trong một số trường họp chưa load các libs tích hợp thêm
+````
+https://www.jetbrains.com/help/idea/delegate-build-and-run-actions-to-maven.html#auto_reload_maven
+````
 
 ## Tổng quan giao diện của phần mềm
 
