@@ -95,8 +95,8 @@ public class Main {
         session.save(loai);
         tx.commit();*/
 
-        //  Main.listProduct();
-       // Main.listCustomer();
+//          Main.listProduct();
+//        Main.listCustomer();
          Main.listOrder();
 
 
