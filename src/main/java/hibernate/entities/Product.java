@@ -41,9 +41,19 @@ public class Product {
     @OneToMany(mappedBy = "product",fetch=FetchType.EAGER)
     private Set<OrderDetail> OrderDetail;
 
+    public Product(int id, Category category, String name, String description, int amount, float price, String image) {
+        this.id = id;
+        this.category = category;
+        this.name = name;
+        this.description = description;
+        this.amount = amount;
+        this.price = price;
+        this.image = image;
+    }
+
     @Override
     public String toString() {
-        return "Product(id=" + id + ", name=" + name + ", description=" + description+" , price="+price+", img="+image+" )";
+        return "Product(id=" + id +" Category="+ category.getName()+", name=" + name + ", description=" + description+" , price="+price+", img="+image+" )";
     }
 
 }
