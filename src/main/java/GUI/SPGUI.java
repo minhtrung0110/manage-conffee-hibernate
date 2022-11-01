@@ -5,10 +5,12 @@
 // */
 //package GUI;
 //
-//import BUS.LoaiBUS;
+////import BUS.LoaiBUS;
 //import BUS.SanPhamBUS;
-//import DTO.LoaiDTO;
-//import DTO.SanPhamDTO;
+//import hibernate.entities.Category;
+//import hibernate.entities.Product;
+////import DTO.Category;
+////import DTO.Product;
 //import java.awt.Color;
 //import java.awt.Cursor;
 //import java.awt.Dimension;
@@ -56,7 +58,7 @@
 //public class SPGUI extends JPanel implements KeyListener {
 //
 //    private SanPhamBUS spBUS = new SanPhamBUS();
-//    private LoaiBUS loaiBUS = new LoaiBUS();
+////    private LoaiBUS loaiBUS = new LoaiBUS();
 ////    private NsxBUS nsxBUS = new NsxBUS();
 //    private JTable tbl;
 //    private BufferedImage i = null;//Hình ảnh chọn từ file
@@ -77,7 +79,7 @@
 //    private JComboBox cmbSortLoai;
 //    private JComboBox cmbSortNSX;
 //
-//    //        
+//    //
 //    public SPGUI(int width) {
 //        DEFALUT_WIDTH = width;
 //        init();
@@ -244,7 +246,7 @@
 //                    spBUS.delete(txtId.getText());
 //                    cleanView();
 //                    tbl.clearSelection();
-//                    outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
+//                    outModel(model, (ArrayList<Product>) spBUS.getSpBUS());
 //                }
 //            }
 //        });
@@ -332,20 +334,20 @@
 //                        int sl = Integer.parseInt(txtSl.getText());
 //                        int gia = Integer.parseInt(txtGia.getText());
 //                        String mota = txtMT.getText();
-//                        LoaiDTO loai = (LoaiDTO) cmbLoai.getSelectedItem();
-//                        int maLoai = loai.getId_Loai();
+//                        Category loai = (Category) cmbLoai.getSelectedItem();
+//                        int maLoai = loai.getId();
 //                        String IMG = imgName;
-//                        if (spBUS.checkMasp(maSP)) {
-//                            JOptionPane.showMessageDialog(null, "Mã sản phẩm đă tồn tại !!!");
-//                            return;
-//                        }
+////                        if (spBUS.checkMasp(maSP)) {
+////                            JOptionPane.showMessageDialog(null, "Mã sản phẩm đă tồn tại !!!");
+////                            return;
+////                        }
 //                        //Upload sản phẩm lên DAO và BUS
-//                        SanPhamDTO sp = new SanPhamDTO(maLoai, tenSP, mota, gia, IMG);
+//                        Product sp = new Product(maLoai, tenSP, mota, gia, IMG);
 //                        spBUS.add(sp);
 //
-//                        outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
+//                        outModel(model, (ArrayList<Product>) spBUS.getSpBUS());// Load lại table
 //
-//                        saveIMG();// Lưu hình ảnh 
+//                        saveIMG();// Lưu hình ảnh
 //
 //                        cleanView();
 //                    }
@@ -360,18 +362,18 @@
 //                        int gia = Integer.parseInt(txtGia.getText());
 //                        String mota = txtMT.getText();
 //
-//                        LoaiDTO loai = (LoaiDTO) cmbLoai.getSelectedItem();
+//                        Category loai = (Category) cmbLoai.getSelectedItem();
 //                        int maLoai = loai.getId_Loai();
 //
 //                        String IMG = imgName;
 //
 //                        //Upload sản phẩm lên DAO và BUS
-//                        SanPhamDTO sp = new SanPhamDTO(maLoai, tenSP, mota, gia, IMG);
+//                        Product sp = new Product(maLoai, tenSP, mota, gia, IMG);
 //                        spBUS.set(sp);
 //
-//                        outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());// Load lại table
+//                        outModel(model, (ArrayList<Product>) spBUS.getSpBUS());// Load lại table
 //
-//                        saveIMG();// Lưu hình ảnh 
+//                        saveIMG();// Lưu hình ảnh
 //
 //                        JOptionPane.showMessageDialog(null, "Sửa thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
 //
@@ -399,7 +401,7 @@
 //                    File file = fc.getSelectedFile(); //Lấy URL
 ////                    spBUS.ImportExcelDatabase(file);    //LUU Y: LAM CHO NAY
 //                    spBUS.list();
-//                    outModel(model, (ArrayList<SanPhamDTO>) spBUS.getSpBUS());
+//                    outModel(model, (ArrayList<Product>) spBUS.getSpBUS());
 //                    JOptionPane.showMessageDialog(null, "Nhap file excel thanh cong");
 //                }
 //            }
@@ -444,7 +446,7 @@
 //        tbl = new JTable(model);
 //        TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
 //        tbl.setRowSorter(rowSorter);
-//        listSP(); //Đọc từ database lên table 
+//        listSP(); //Đọc từ database lên table
 //        /**
 //         * ******************************************************
 //         */
@@ -453,7 +455,7 @@
 //         * ************** TẠO TABLE
 //         * ***********************************************************
 //         */
-//        // Chỉnh width các cột 
+//        // Chỉnh width các cột
 //        tbl.getColumnModel().getColumn(0).setPreferredWidth(40);
 //        tbl.getColumnModel().getColumn(1).setPreferredWidth(120);
 //        tbl.getColumnModel().getColumn(2).setPreferredWidth(40);
@@ -510,7 +512,7 @@
 //                txtSl.setText(tbl.getModel().getValueAt(i, 2).toString());
 //                txtGia.setText(tbl.getModel().getValueAt(i, 3).toString());
 //                txtMT.setText(tbl.getModel().getValueAt(i, 4).toString());
-//                cmbLoai.setSelectedItem(loaiBUS.searchMaLoai((int) tbl.getModel().getValueAt(i, 5)));
+//              //  cmbLoai.setSelectedItem(loaiBUS.searchMaLoai((int) tbl.getModel().getValueAt(i, 5)));
 //
 //                img.setText("");
 //                img.setIcon(new ImageIcon(newImage));
@@ -526,9 +528,9 @@
 //        JPanel searchBox = new JPanel(null);
 //        searchBox.setBackground(null);
 //        searchBox.setBounds(new Rectangle(620, 200, 250, 30));
-//        searchBox.setBorder(createLineBorder(Color.BLACK)); //Chỉnh viền 
+//        searchBox.setBorder(createLineBorder(Color.BLACK)); //Chỉnh viền
 //
-//        //Phần TextField 
+//        //Phần TextField
 //        txtSearch = new JTextField();
 //        txtSearch.setBounds(new Rectangle(5, 0, 200, 30));
 //        txtSearch.setBorder(null);
@@ -549,7 +551,7 @@
 //            @Override
 //            public void focusGained(FocusEvent e) {
 //                searchIcon.setIcon(new ImageIcon("./src/image/search_25px_focus.png")); //Đổi màu icon
-//                searchBox.setBorder(createLineBorder(new Color(52, 152, 219))); // Đổi màu viền 
+//                searchBox.setBorder(createLineBorder(new Color(52, 152, 219))); // Đổi màu viền
 //            }
 //
 //            public void focusLost(FocusEvent e) //Trờ về như cũ
@@ -695,7 +697,7 @@
 //        if (loaiBUS.getLoaiBUS() == null) {
 //            loaiBUS.list();
 //        }
-//        ArrayList<LoaiDTO> loai = (ArrayList<LoaiDTO>) loaiBUS.getLoaiBUS();
+//        ArrayList<Category> loai = (ArrayList<Category>) loaiBUS.getLoaiBUS();
 //        addCombo(cmb, loai);
 //    }
 //
@@ -704,7 +706,7 @@
 //        if (spBUS.getSpBUS() == null) {
 //            spBUS.list();
 //        }
-//        ArrayList<SanPhamDTO> sp = (ArrayList<SanPhamDTO>) spBUS.getSpBUS();
+//        ArrayList<Product> sp = (ArrayList<Product>) spBUS.getSpBUS();
 //        model.setRowCount(0);
 //        outModel(model, sp);
 //    }
@@ -726,11 +728,11 @@
 //        imgName = "null";
 //    }
 //
-//    public void outModel(DefaultTableModel model, ArrayList<SanPhamDTO> sp) // Xuất ra Table từ ArrayList
+//    public void outModel(DefaultTableModel model, ArrayList<Product> sp) // Xuất ra Table từ ArrayList
 //    {
 //        Vector data;
 //        model.setRowCount(0);
-//        for (SanPhamDTO s : sp) {
+//        for (Product s : sp) {
 //            data = new Vector();
 //            data.add(s.getId_SP());
 //            data.add(s.getName());
@@ -750,7 +752,7 @@
 //                File save = new File("src/image/SanPham/" + imgName);//Tạo file
 //                ImageIO.write(i, "jpg", save); // Lưu hình i vào đường dẫn file save
 //
-//                i = null; //Xóa hình trong bộ nhớ 
+//                i = null; //Xóa hình trong bộ nhớ
 //            }
 //        } catch (IOException ex) {
 //            Logger.getLogger(SanPhamGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -762,15 +764,15 @@
 //        int maloai = 0;
 ////        String mansx = "";
 //        if (cmbSortLoai.getSelectedIndex() != 0) {
-//            LoaiDTO loai = (LoaiDTO) cmbSortLoai.getSelectedItem();
-//            maloai = loai.getId_Loai();
+//            Category loai = (Category) cmbSortLoai.getSelectedItem();
+//            maloai = loai.getId();
 //            System.out.println(maloai);
 //        }
 //
 //        int max = txtMaxPrice.getText().equals("") ? 999999 : Integer.parseInt(txtMaxPrice.getText());
 //        int min = txtMinPrice.getText().equals("") ? 0 : Integer.parseInt(txtMinPrice.getText());
 //
-//        outModel(model, spBUS.searchSP(masp, maloai, max, min));
+//       // outModel(model, spBUS.searchSP(masp, maloai, max, min));
 //    }
 //
 //    @Override
