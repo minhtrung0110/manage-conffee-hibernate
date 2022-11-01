@@ -99,7 +99,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         Font font1 = new Font("Segoe UI", Font.BOLD, 13);
         Font font2 = new Font("Tahoma", Font.PLAIN, 25);
 
-            LoaiModel loaiModel1 = listLoai();
+           // LoaiModel loaiModel1 = listLoai();
 //        LoaiModel loaiModel2 = listLoai();
 
         /**
@@ -146,9 +146,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         JLabel lbLoai = new JLabel("Loại");
         lbLoai.setBounds(new Rectangle(0, 180, 40, 30));
         lbLoai.setFont(font1);
-        cmbLoai = new JComboBox<>(loaiModel1);
-        cmbLoai.setFont(font0);
-        cmbLoai.setBounds(new Rectangle(100, 180, 110, 30));
+//        cmbLoai = new JComboBox<>(loaiModel1);
+//        cmbLoai.setFont(font0);
+//        cmbLoai.setBounds(new Rectangle(100, 180, 110, 30));
 
         img = new JLabel("Thêm hình");
         img.setBorder(createLineBorder(Color.BLACK));
@@ -165,7 +165,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         ItemView.add(lbmota);
         ItemView.add(txtMT);
         ItemView.add(lbLoai);
-        ItemView.add(cmbLoai);
+     //   ItemView.add(cmbLoai);
 
         /**
          * *********************************************************
