@@ -99,7 +99,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         Font font1 = new Font("Segoe UI", Font.BOLD, 13);
         Font font2 = new Font("Tahoma", Font.PLAIN, 25);
 
-            LoaiModel loaiModel1 = listLoai();
+//        LoaiModel loaiModel1 = listLoai();
 //        LoaiModel loaiModel2 = listLoai();
 
         /**
@@ -146,9 +146,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         JLabel lbLoai = new JLabel("Loại");
         lbLoai.setBounds(new Rectangle(0, 180, 40, 30));
         lbLoai.setFont(font1);
-        cmbLoai = new JComboBox<>(loaiModel1);
-        cmbLoai.setFont(font0);
-        cmbLoai.setBounds(new Rectangle(100, 180, 110, 30));
+      //  cmbLoai = new JComboBox<>(loaiModel1);
+        //cmbLoai.setFont(font0);
+        //cmbLoai.setBounds(new Rectangle(100, 180, 110, 30));
 
         img = new JLabel("Thêm hình");
         img.setBorder(createLineBorder(Color.BLACK));
@@ -165,7 +165,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         ItemView.add(lbmota);
         ItemView.add(txtMT);
         ItemView.add(lbLoai);
-        ItemView.add(cmbLoai);
+       // ItemView.add(cmbLoai);
 
         /**
          * *********************************************************
@@ -388,7 +388,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         String tenSP = txtTenSP.getText();
                         float gia = txtGia.getText().equals("") ? 0 : Float.parseFloat(txtGia.getText());
                         String mota = txtMT.getText();
-                        Category loai = (Category) cmbLoai.getSelectedItem();
+                        //Category loai = (Category) cmbLoai.getSelectedItem();
+                        // gán loại tạm
+                        Category loai=new Category(1,"Bánh Đàn");
                         int maLoai = loai.getId();
                         String IMG = imgName;
                         //Upload sản phẩm lên DAO và BUS
@@ -419,7 +421,8 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         float gia = Float.parseFloat(txtGia.getText());
                         String mota = txtMT.getText();
 
-                        Category loai = (Category) cmbLoai.getSelectedItem();
+                       // Category loai = (Category) cmbLoai.getSelectedItem();
+                        Category loai=new Category(3,"Cà Phê Pha Máy");
                         int maLoai = loai.getId();
 
                         String IMG = imgName;
@@ -435,7 +438,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         sp.setAmount(10);
                         sp.setPrice(gia);
                         sp.setImage(IMG);
-                        spBUS.update(sp);
+                        spBUS.update(sp,maSP);
                         outModel(model, (ArrayList<Product>) spBUS.getListProduct());// Load lại table
                         saveIMG();// Lưu hình ảnh
                         JOptionPane.showMessageDialog(null, "Sửa sản phẩm thành công");
@@ -765,7 +768,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
         img.setIcon(null);
         img.setText("Image");
-        cmbLoai.setSelectedIndex(0);
+        //cmbLoai.setSelectedIndex(0);
         imgName = "null";
     }
 
@@ -802,16 +805,16 @@ public class SanPhamGUI extends JPanel implements KeyListener {
     public void search() {
         int masp = sortMaSP.getText().equals("") ? 0 : Integer.parseInt(sortMaSP.getText());
         int maloai = 0;
-        if (cmbSortLoai.getSelectedIndex() != 0) {
-            Category loai = (Category) cmbSortLoai.getSelectedItem();
-            maloai = loai.getId();
-            System.out.println(maloai);
-        }
+//        if (cmbSortLoai.getSelectedIndex() != 0) {
+//            Category loai = (Category) cmbSortLoai.getSelectedItem();
+//            maloai = loai.getId();
+//            System.out.println(maloai);
+//        }
 
         int max = txtMaxPrice.getText().equals("") ? 999999 : Integer.parseInt(txtMaxPrice.getText());
         int min = txtMinPrice.getText().equals("") ? 0 : Integer.parseInt(txtMinPrice.getText());
 
-       outModel(model, spBUS.searchProduct(masp, maloai, max, min));
+       outModel(model, spBUS.searchProduct(masp, 2, max, min));
     }
 
     private void setEdit(boolean flag) {
