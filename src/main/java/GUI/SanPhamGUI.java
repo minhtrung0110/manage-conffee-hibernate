@@ -99,7 +99,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         Font font1 = new Font("Segoe UI", Font.BOLD, 13);
         Font font2 = new Font("Tahoma", Font.PLAIN, 25);
 
-//        LoaiModel loaiModel1 = listLoai();
+            LoaiModel loaiModel1 = listLoai();
 //        LoaiModel loaiModel2 = listLoai();
 
         /**
@@ -146,9 +146,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         JLabel lbLoai = new JLabel("Loại");
         lbLoai.setBounds(new Rectangle(0, 180, 40, 30));
         lbLoai.setFont(font1);
-      //  cmbLoai = new JComboBox<>(loaiModel1);
-        //cmbLoai.setFont(font0);
-        //cmbLoai.setBounds(new Rectangle(100, 180, 110, 30));
+        cmbLoai = new JComboBox<>(loaiModel1);
+        cmbLoai.setFont(font0);
+        cmbLoai.setBounds(new Rectangle(100, 180, 110, 30));
 
         img = new JLabel("Thêm hình");
         img.setBorder(createLineBorder(Color.BLACK));
@@ -165,7 +165,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         ItemView.add(lbmota);
         ItemView.add(txtMT);
         ItemView.add(lbLoai);
-       // ItemView.add(cmbLoai);
+        ItemView.add(cmbLoai);
 
         /**
          * *********************************************************
@@ -240,19 +240,19 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         btnFile.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         //icon
-        JLabel lbAdd = new JLabel(new ImageIcon("./src/image/add-icon.png"));
+        JLabel lbAdd = new JLabel(new ImageIcon("./src/main/java/image/add-icon.png"));
         lbAdd.setBounds(new Rectangle(0, 0, 50, 50));
         btnAdd.add(lbAdd);
 
-        JLabel lbEdit = new JLabel(new ImageIcon("./src/image/icons8-gear-32.png"));
+        JLabel lbEdit = new JLabel(new ImageIcon("./src/main/java/image/icons8-gear-32.png"));
         lbEdit.setBounds(new Rectangle(0, 0, 50, 50));
         btnEdit.add(lbEdit);
 
-        JLabel lbDelete = new JLabel(new ImageIcon("./src/image/icons8-delete-32.png"));
+        JLabel lbDelete = new JLabel(new ImageIcon("./src/main/java/image/icons8-delete-32.png"));
         lbDelete.setBounds(new Rectangle(0, 0, 50, 50));
         btnDelete.add(lbDelete);
 
-        JLabel btnXuatExcel = new JLabel(new ImageIcon("./src/image/btnXuatExcel.png"));
+        JLabel btnXuatExcel = new JLabel(new ImageIcon("./src/main/java/image/btnXuatExcel.png"));
         btnXuatExcel.setBounds(new Rectangle(820, 70, 200, 50));
         btnXuatExcel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
@@ -540,9 +540,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                     imgName = tbl.getModel().getValueAt(i, 5).toString();
                     Image newImage;
                     try {
-                        newImage = new ImageIcon("./src/image/SanPham/" + imgName).getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
+                        newImage = new ImageIcon("./src/main/java/image/SanPham/" + imgName).getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
                     } catch (NullPointerException E) {
-                        newImage = new ImageIcon("./src/image/SanPham/NoImage.jpg").getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
+                        newImage = new ImageIcon("./src/main/java/image/SanPham/NoImage.jpg").getImage().getScaledInstance(200, 230, Image.SCALE_DEFAULT);
                     }
                     txtId.setText(tbl.getModel().getValueAt(i, 0).toString());
                     txtTenSP.setText(tbl.getModel().getValueAt(i, 1).toString());
@@ -575,7 +575,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         txtSearch.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 
         // Custem Icon search
-        JLabel searchIcon = new JLabel(new ImageIcon("./src/image/search_25px.png"));
+        JLabel searchIcon = new JLabel(new ImageIcon("./src/main/java/image/search_25px.png"));
         searchIcon.setBounds(new Rectangle(200, -9, 50, 50));
         searchIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
@@ -587,13 +587,13 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         txtSearch.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                searchIcon.setIcon(new ImageIcon("./src/image/search_25px_focus.png")); //Đổi màu icon
+                searchIcon.setIcon(new ImageIcon("./src/main/java/image/search_25px_focus.png")); //Đổi màu icon
                 searchBox.setBorder(createLineBorder(new Color(52, 152, 219))); // Đổi màu viền
             }
 
             public void focusLost(FocusEvent e) //Trờ về như cũ
             {
-                searchIcon.setIcon(new ImageIcon("./src/image/search_25px.png"));
+                searchIcon.setIcon(new ImageIcon("./src/main/java/image/search_25px.png"));
                 searchBox.setBorder(createLineBorder(Color.BLACK));
             }
         });
@@ -702,7 +702,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
          */
         setEdit(false);
 
-        JLabel btnSearch = new JLabel(new ImageIcon("./src/image/btnSearch_45px.png"));
+        JLabel btnSearch = new JLabel(new ImageIcon("./src/main/java/image/btnSearch_45px.png"));
         btnSearch.setBounds(new Rectangle(840, 26, 63, 63));
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSearch.addMouseListener(new MouseAdapter() {
@@ -789,7 +789,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
     public void saveIMG() {
         try {
             if (i != null) {
-                File save = new File("src/image/SanPham/" + imgName);//Tạo file
+                File save = new File("src/main/java/image/SanPham/" + imgName);//Tạo file
                 ImageIO.write(i, "jpg", save); // Lưu hình i vào đường dẫn file save
 
                 i = null; //Xóa hình trong bộ nhớ
