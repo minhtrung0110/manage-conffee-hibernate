@@ -66,20 +66,20 @@ public class ProductDAL {
         }
         return result;
     }
-    public int updateProdct(int id){
+    public int updateProdct(Product product){
         Session session = factory.openSession();
         int result = 0;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            String hql = "UPDATE Product set name = :name "  +
-                    "WHERE id = :id";
-            Query query = session.createQuery(hql);
-            query.setParameter("name", "Coffee vị bánh trắng");
-            query.setParameter("id", id);
-            result = query.executeUpdate();
-           // System.out.println("Rows affected: " + result);
-
+//            String hql = "UPDATE Product set name = :name "  +
+//                    "WHERE id = :id";
+//            Query query = session.createQuery(hql);
+//            query.setParameter("name", "Coffee vị bánh trắng");
+//            query.setParameter("id", id);
+//            result = query.executeUpdate();
+//           // System.out.println("Rows affected: " + result);
+            session.update(product);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
