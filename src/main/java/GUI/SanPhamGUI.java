@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import BLL.CategoryBLL;
 import BLL.RandomCode;
 //import BUS.LoaiBUS;
 import BLL.SanPhamBLL;
@@ -62,7 +63,7 @@ import javax.swing.table.TableRowSorter;
 public class SanPhamGUI extends JPanel implements KeyListener {
 
     private SanPhamBLL spBUS = new SanPhamBLL();
-//    private LoaiBUS loaiBUS = new LoaiBUS();
+    private CategoryBLL cateBLL=new CategoryBLL();
    private JTable tbl;
     private BufferedImage i = null;//Hình ảnh chọn từ file
     private JLabel img;
@@ -100,7 +101,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         Font font2 = new Font("Tahoma", Font.PLAIN, 25);
 
 
-           // LoaiModel loaiModel1 = listLoai();
+           LoaiModel loaiModel1 = listCategory();
 //        LoaiModel loaiModel2 = listLoai();
 
         /**
@@ -147,8 +148,8 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         JLabel lbLoai = new JLabel("Loại");
         lbLoai.setBounds(new Rectangle(0, 180, 40, 30));
         lbLoai.setFont(font1);
-      //  cmbLoai = new JComboBox<>(loaiModel1);
-        //cmbLoai.setFont(font0);
+        cmbLoai = new JComboBox<>(loaiModel1);
+        cmbLoai.setFont(font0);
 
 
 
@@ -167,7 +168,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         ItemView.add(lbmota);
         ItemView.add(txtMT);
         ItemView.add(lbLoai);
-       // ItemView.add(cmbLoai);
+        ItemView.add(cmbLoai);
 
 
         /**
@@ -391,9 +392,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         String tenSP = txtTenSP.getText();
                         float gia = txtGia.getText().equals("") ? 0 : Float.parseFloat(txtGia.getText());
                         String mota = txtMT.getText();
-                        //Category loai = (Category) cmbLoai.getSelectedItem();
-                        // gán loại tạm
-                        Category loai=new Category(1,"Bánh Đàn");
+                        Category loai = (Category) cmbLoai.getSelectedItem();
+                        //gán loại tạm
+                      //  Category loai=new Category(1,"Bánh Đàn");
                         int maLoai = loai.getId();
                         String IMG = imgName;
                         //Upload sản phẩm lên DAO và BUS
@@ -424,8 +425,8 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         float gia = Float.parseFloat(txtGia.getText());
                         String mota = txtMT.getText();
 
-                       // Category loai = (Category) cmbLoai.getSelectedItem();
-                        Category loai=new Category(3,"Cà Phê Pha Máy");
+                       Category loai = (Category) cmbLoai.getSelectedItem();
+                       /// Category loai=new Category(3,"Cà Phê Pha Máy");
                         int maLoai = loai.getId();
 
                         String IMG = imgName;
@@ -553,7 +554,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                     txtId.setText(tbl.getModel().getValueAt(i, 0).toString());
                     txtTenSP.setText(tbl.getModel().getValueAt(i, 1).toString());
                     txtGia.setText(tbl.getModel().getValueAt(i, 2).toString());
-                  //  cmbLoai.setSelectedItem(loaiBUS.searchMaLoai(loaiBUS.getID((String) tbl.getModel().getValueAt(i, 3))));
+                    cmbLoai.setSelectedItem(cateBLL.searchCourseWithID((Integer) tbl.getModel().getValueAt(i, 3)));
                     txtMT.setText(tbl.getModel().getValueAt(i, 4).toString());
 
                     img.setText("");
@@ -726,23 +727,23 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
     }
 
-//    public LoaiModel listLoai() {
-//        if (loaiBUS.getLoaiBUS() == null) {
-//            loaiBUS.list();
-//        }
-//        Category[] loai = new Category[loaiBUS.getLoaiBUS().size() + 1];
-//        Category all = new Category();
-//        all.setId_Loai(0);
-//        all.setName("Loại sản phẩm");
-//        int i = 0;
-//        loai[i] = all;
-//        for (Category loaiDTO : loaiBUS.getLoaiBUS()) {
-//            i++;
-//            loai[i] = loaiDTO;
-//        }
-//        LoaiModel model = new LoaiModel(loai);
-//        return model;
-//    }
+    public LoaiModel listCategory() {
+        if (CategoryBLL.getListCategory() == null) {
+            cateBLL.loadListCategory();
+        }
+        Category[] loai = new Category[CategoryBLL.getListCategory().size() + 1];
+        Category all = new Category();
+        all.setId(0);
+        all.setName("Loại sản phẩm");
+        int i = 0;
+        loai[i] = all;
+        for (Category loaiDTO : CategoryBLL.getListCategory()) {
+            i++;
+            loai[i] = loaiDTO;
+        }
+        LoaiModel model = new LoaiModel(loai);
+        return model;
+    }
 
     public void loadListProduct() // Chép ArrayList lên table
     {
@@ -771,7 +772,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
 
         img.setIcon(null);
         img.setText("Image");
-        //cmbLoai.setSelectedIndex(0);
+        cmbLoai.setSelectedIndex(0);
         imgName = "null";
     }
 
