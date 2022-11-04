@@ -150,6 +150,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         lbLoai.setFont(font1);
         cmbLoai = new JComboBox<>(loaiModel1);
         cmbLoai.setFont(font0);
+        cmbLoai.setBounds(new Rectangle(100, 180, 220, 30));
 
 
 
@@ -329,7 +330,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                 btnBack.setVisible(true);
                 btnFile.setVisible(true);
 
-//                tbl.clearSelection();
+               tbl.clearSelection();
                 tbl.setEnabled(false);
             }
         });
@@ -554,9 +555,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                     txtId.setText(tbl.getModel().getValueAt(i, 0).toString());
                     txtTenSP.setText(tbl.getModel().getValueAt(i, 1).toString());
                     txtGia.setText(tbl.getModel().getValueAt(i, 2).toString());
-                    cmbLoai.setSelectedItem(cateBLL.searchCourseWithID((Integer) tbl.getModel().getValueAt(i, 3)));
-                    txtMT.setText(tbl.getModel().getValueAt(i, 4).toString());
 
+                    txtMT.setText(tbl.getModel().getValueAt(i, 4).toString());
+                    cmbLoai.setSelectedItem(cateBLL.searchCourseWithID((Integer) tbl.getModel().getValueAt(i, 3)));
                     img.setText("");
                     img.setIcon(new ImageIcon(newImage));
                 }
@@ -671,7 +672,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         lbSortMaLoai.setBounds(170, 40, 40, 30);
         sort.add(lbSortMaLoai);
 
-        cmbSortLoai = new JComboBox<>();//loaiModel2);
+        cmbSortLoai = new JComboBox<>(listCategory());//loaiModel2);
         cmbSortLoai.setEditable(false);
         cmbSortLoai.setFont(font0);
         cmbSortLoai.setBounds(new Rectangle(210, 42, 110, 30));
@@ -809,16 +810,16 @@ public class SanPhamGUI extends JPanel implements KeyListener {
     public void search() {
         int masp = sortMaSP.getText().equals("") ? 0 : Integer.parseInt(sortMaSP.getText());
         int maloai = 0;
-//        if (cmbSortLoai.getSelectedIndex() != 0) {
-//            Category loai = (Category) cmbSortLoai.getSelectedItem();
-//            maloai = loai.getId();
-//            System.out.println(maloai);
-//        }
+        if (cmbSortLoai.getSelectedIndex() != 0) {
+            Category loai = (Category) cmbSortLoai.getSelectedItem();
+            maloai = loai.getId();
+            System.out.println(maloai);
+        }
 
-        int max = txtMaxPrice.getText().equals("") ? 999999 : Integer.parseInt(txtMaxPrice.getText());
+        int max = txtMaxPrice.getText().equals("") ? 999999999 : Integer.parseInt(txtMaxPrice.getText());
         int min = txtMinPrice.getText().equals("") ? 0 : Integer.parseInt(txtMinPrice.getText());
 
-       outModel(model, spBUS.searchProduct(masp, 2, max, min));
+       outModel(model, spBUS.searchProduct(masp, maloai, max, min));
     }
 
     private void setEdit(boolean flag) {

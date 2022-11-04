@@ -43,14 +43,14 @@ public class CategoryBLL {
         }
         listCategory=dal.findAll();
     }
-    public List<Category> searchCourseWithID(int id) {
+    public Category searchCourseWithID(int id) {
         List<Category> search = null;
         for (Category cs : listCategory) {
             if (cs.getId()==id) {
-                search.add(cs);
+              return cs;
             }
         }
-        return search;
+        return null;
     }
 //
 //    public void show() {
