@@ -93,12 +93,14 @@ public class SanPhamBLL {
     }
 
     public void delete(String id) {
+
         int idSP = Integer.parseInt(id);
         for (Product spDTO : listProduct) {
             if (spDTO.getId() == idSP) {
                 try {
-                    listProduct.remove(spDTO);
+
                     dal.deleteProduct(Integer.parseInt(id));
+                    System.out.println(listProduct.remove(spDTO));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -106,12 +108,13 @@ public class SanPhamBLL {
         }
     }
 
-    public void update(Product spDTO) {
+    public void update(Product spDTO,int id) {
         for (int i = 0; i < listProduct.size(); i++) {
             if (listProduct.get(i).getId() == spDTO.getId()) {
                 try {
-                    dal.updateProdct(spDTO);
+                    dal.updateProduct(spDTO,id);
                     listProduct.set(i, spDTO);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

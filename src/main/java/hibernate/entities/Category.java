@@ -11,7 +11,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString()
+
 @Entity(name = "loai")
 public class Category {
     @Id
@@ -28,5 +28,9 @@ public class Category {
     public Category(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+    @Override
+    public String toString() {
+        return name;
     }
 }
