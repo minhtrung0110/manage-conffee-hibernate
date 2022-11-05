@@ -37,6 +37,11 @@ private int status;
     return "Customer( id="+id+" firstName= "+firstName+" lastName= "+lastName+" phone= "+phoneNumber+" status = "+status+")";
 }
 
+    public Customer(String firstName, String lastName, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+    }
 
 
 }
