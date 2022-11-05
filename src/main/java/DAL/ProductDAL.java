@@ -66,7 +66,7 @@ public class ProductDAL {
         }
         return result;
     }
-    public int updateProduct(Product product,int id){
+    public int updateProduct(Product product){
         System.out.println("A - "+product);
         Session session = factory.openSession();
         int result = 0;
@@ -79,7 +79,7 @@ public class ProductDAL {
             Query query = session.createQuery(hql);
 
             query.setParameter("name", product.getName());
-            query.setParameter("id", id);
+            query.setParameter("id", product.getId());
             query.setParameter("category", product.getCategory());
             query.setParameter("description", product.getDescription());
             query.setParameter("price", product.getPrice());
