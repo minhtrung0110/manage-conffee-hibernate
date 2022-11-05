@@ -298,8 +298,9 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                     JOptionPane.showMessageDialog(null, "\"Vui lòng chọn sản phẩm cần xóa !!!\"");
                     return;
                 }
-                int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
+                int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Thông Báo Xác Nhận", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
+                    System.out.println(txtId.getText());
                     spBUS.delete(txtId.getText());
                     JOptionPane.showMessageDialog(null, "Xóa sản phẩm thành công !!!");
                     cleanView();
@@ -443,7 +444,8 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                         sp.setAmount(10);
                         sp.setPrice(gia);
                         sp.setImage(IMG);
-                        spBUS.update(sp,maSP);
+                        sp.setId(maSP);
+                        spBUS.update(sp);
                         outModel(model, (ArrayList<Product>) spBUS.getListProduct());// Load lại table
                         saveIMG();// Lưu hình ảnh
                         JOptionPane.showMessageDialog(null, "Sửa sản phẩm thành công");
