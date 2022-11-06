@@ -1,3 +1,6 @@
+
+import DAL.OrderDAL;
+
 ///*
 // * To change this license header, choose License Headers in Project Properties.
 // * To change this template file, choose Tools | Templates
@@ -179,3 +182,19 @@
 //        return ds;
 //    }
 //}
+
+public class HoaDonBLL {
+
+    private OrderDAL dal = new OrderDAL();
+
+    public HoaDonBLL() {
+    }
+
+public long getCountOrder(){
+        return dal.getCount();
+    }
+
+public long getTotalRevenue(){
+        return dal.getTotalRevenue();
+    }
+}

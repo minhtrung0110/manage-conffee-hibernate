@@ -164,6 +164,13 @@ public class SanPhamBLL {
         }
         return search;
     }
+    
+    public long getCountProduct(){
+        return dal.getCount();
+    }
+    
+    
+    
 //
 //    public void exportProduct() {
 //
