@@ -22,6 +22,8 @@ public class Order {
     private float totalPrice;
     @Column(name = "create_day")
     private Date createdDate;
+    @Column(name = "id_NV")
+    private int id_Staff;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_KH",nullable = false,foreignKey = @ForeignKey(name = "hoadon_ibfk_1"))
     private Customer customer;
