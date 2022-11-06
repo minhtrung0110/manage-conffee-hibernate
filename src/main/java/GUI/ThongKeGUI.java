@@ -83,17 +83,18 @@ public class ThongKeGUI extends JPanel{
     
     void setDataToChart(JPanel jp){
         
-        //List<Order>=(ArrayList<Order>) HD.getAllOrder();
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.setValue(200, "Amount", "january");
-        dataset.setValue(150, "Amount", "february");
-        dataset.setValue(18, "Amount", "march");
-        dataset.setValue(100, "Amount", "april");
-        dataset.setValue(80, "Amount", "may");
-        dataset.setValue(250, "Amount", "june");
+        List<Order> listOrder=(ArrayList<Order>) HD.getListOrder();
+        if(listOrder!=null){
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            for(Order item : listOrder){
+                dataset.addValue(item.getTotalPrice(),"Total",item.getCreatedDate());
+            }
+        
+        
+      
         
         //create chart
-        JFreeChart chart = ChartFactory.createLineChart("thong ke","amount","thoi gian",dataset);
+        JFreeChart chart = ChartFactory.createLineChart("THỐNG KÊ DOANH THU","Thời Gian","Doanh Thu (VND)",dataset);
         
         ChartPanel  chpn=new ChartPanel(chart);
         chpn.setPreferredSize(new Dimension(jp.getWidth(),450));
@@ -103,6 +104,7 @@ public class ThongKeGUI extends JPanel{
         jp.add(chpn);
         jp.validate();
         jp.repaint();
+    }
     }
     
     public void init(){   
