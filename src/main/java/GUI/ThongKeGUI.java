@@ -7,10 +7,14 @@ package GUI;
 //
 
 
-import DAL.CategoryDAL;
-import DAL.OrderDAL;
-import DAL.ProductDAL;
+
+import BLL.LoaiBLL;
+import BLL.SanPhamBLL;
+import BLL.HoaDonBLL;
+import hibernate.entities.Order;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -29,6 +33,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import static javax.swing.BorderFactory.createLineBorder;
 import javax.swing.JButton;
@@ -56,20 +61,48 @@ public class ThongKeGUI extends JPanel{
     private int DEFAUTL_WIDTH;
     private JLabel lbDateStart,lbDateEnd;
     private JPanel panel;
-
+    HoaDonBLL HD=new HoaDonBLL();
 
     
     public ThongKeGUI(int width) {
         this.DEFAUTL_WIDTH = width;
         init();
-        ProductDAL pro_dal=new ProductDAL();
-        CategoryDAL cate_dal=new CategoryDAL();
-        OrderDAL or_dal=new OrderDAL();
+        SanPhamBLL pro_bll=new SanPhamBLL();
+        LoaiBLL cate_bll=new LoaiBLL();
+        HoaDonBLL or_bll=new HoaDonBLL();
         
-        text_loai.setText(String.valueOf(cate_dal.getCount()));
-        text_sanpham.setText(String.valueOf(pro_dal.getCount()));
-        text_donhang.setText(String.valueOf(or_dal.getCount()));
-        text_doanhthu.setText(String.valueOf(or_dal.getTotalRevenue())+" VND");
+        text_loai.setText(String.valueOf(cate_bll.getCountCategory()));
+        text_sanpham.setText(String.valueOf(pro_bll.getCountProduct()));
+        text_donhang.setText(String.valueOf(or_bll.getCountOrder()));
+        text_doanhthu.setText(String.valueOf(or_bll.getTotalRevenue())+" VND");
+        setDataToChart(panelLineChart);
+        
+        
+        
+    }
+    
+    void setDataToChart(JPanel jp){
+        
+        //List<Order>=(ArrayList<Order>) HD.getAllOrder();
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        dataset.setValue(200, "Amount", "january");
+        dataset.setValue(150, "Amount", "february");
+        dataset.setValue(18, "Amount", "march");
+        dataset.setValue(100, "Amount", "april");
+        dataset.setValue(80, "Amount", "may");
+        dataset.setValue(250, "Amount", "june");
+        
+        //create chart
+        JFreeChart chart = ChartFactory.createLineChart("thong ke","amount","thoi gian",dataset);
+        
+        ChartPanel  chpn=new ChartPanel(chart);
+        chpn.setPreferredSize(new Dimension(jp.getWidth(),450));
+        
+        jp.removeAll();
+        jp.setLayout(new CardLayout());
+        jp.add(chpn);
+        jp.validate();
+        jp.repaint();
     }
     
     public void init(){   

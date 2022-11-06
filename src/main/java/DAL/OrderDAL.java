@@ -5,6 +5,7 @@
 package DAL;
 
 import hibernate.utils.HibernateUtils;
+import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,6 +24,26 @@ public class OrderDAL{
     
     static final SessionFactory factory = HibernateUtils.getSessionFactory();
     
+     public List getAllOrder() {
+        Session session = factory.openSession();
+        List listOrder = null;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            String hql = "FROM Order";
+            listOrder = session.createQuery(hql).list();
+            
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return listOrder;
+    }
     
     public long getCount(){
         Session session = factory.openSession();
