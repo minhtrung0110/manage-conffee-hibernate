@@ -15,11 +15,12 @@ import hibernate.entities.Category;
  *
  * @author Asus
  */
-public class LoaiBUS {
+public class LoaiBLL {
 
     private List<Category> loaiBUS;
+    CategoryDAL dal=new CategoryDAL();
 
-    public LoaiBUS() {
+    public LoaiBLL() {
         loaiBUS = null;
     }
 
@@ -104,8 +105,11 @@ public class LoaiBUS {
         }
         return id;
     }
+    public long getCountCategory(){
+        return dal.getCount();
+    }
     public static void main(String[] args) {
-        LoaiBUS bus = new LoaiBUS();
+        LoaiBLL bus = new LoaiBLL();
         bus.list();
         Category rs = bus.searchMaLoai(7);
         System.out.println(rs);

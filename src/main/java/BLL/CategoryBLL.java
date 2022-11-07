@@ -52,6 +52,9 @@ public class CategoryBLL {
         }
         return null;
     }
+    public long getCountCategory(){
+        return dal.getCount();
+    }
 //
 //    public void show() {
 //        for (Category category : CategoryList) {

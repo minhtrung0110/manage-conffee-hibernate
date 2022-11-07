@@ -203,10 +203,12 @@ public class QLCoffee extends JFrame implements MouseListener {
 
     public void changeMainInfo(int i) throws FileNotFoundException //Đổi Phần hiển thị khi bấm btn trên menu
     {
-//        if (flag && i > 4 && i < 8) // Thay đổi nếu Thông kế đang dropdown
-//        {
-//            i = i + 2;
-//        }
+       if (flag && i > 4 && i < 8) // Thay đổi nếu Thông kế đang dropdown
+       {
+           i = i + 2;
+       }
+       
+       //System.out.print(i);
         switch (i) {
             case 0: //  BÁN HÀNG 
                 main.removeAll();
@@ -274,7 +276,7 @@ public class QLCoffee extends JFrame implements MouseListener {
                 main.repaint();
                 main.revalidate();
                 break;
-            case 7: //NHÀ CUNG CẤP
+         /*   case 7: //NHÀ CUNG CẤP
                 main.removeAll();
 //                main.add(new NhaCungCapGUI(DEFALUT_WIDTH));
                 main.repaint();
@@ -286,9 +288,10 @@ public class QLCoffee extends JFrame implements MouseListener {
                 main.repaint();
                 main.revalidate();
                 break;
-            case 9: // THỐNG KÊ
+*/
+            case 7: // THỐNG KÊ
                 main.removeAll();
-//                main.add(new ThongKeGUI(DEFALUT_WIDTH));
+                main.add(new ThongKeGUI(DEFALUT_WIDTH));
                 main.repaint();
                 main.revalidate();
                 break;
