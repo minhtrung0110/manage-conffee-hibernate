@@ -32,9 +32,7 @@ public class CustomerDAL {
 
             tx.commit();
         } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
+            if (tx != null) tx.rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -48,7 +46,7 @@ public class CustomerDAL {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            String hql = "FROM Customer P WHERE P.id =" + id;
+            String hql = "FROM Customer C WHERE C.id =" + id;
             customer = (Customer) session.createQuery(hql).uniqueResult();
             tx.commit();
         } catch (HibernateException e) {
@@ -71,9 +69,8 @@ public class CustomerDAL {
             session.save(customer);
             tx.commit();
         } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
+            if (tx != null) tx.rollback();
+            
 
             e.printStackTrace();
             return 0;
@@ -89,14 +86,15 @@ public class CustomerDAL {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            String hql = "UPDATE Customer set name = :name "
-                    + "WHERE id = :id";
+            String hql = "UPDATE Customer set firstName=:firstName, lastName=:lastName, phoneNumber=:phoneNumber"
+                    + " WHERE id = :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", c.getId());
             query.setParameter("firstName", c.getFirstName());
             query.setParameter("lastName", c.getLastName());
+            query.setParameter("phoneNumber", c.getPhoneNumber());
             result = query.executeUpdate();
-
+            System.out.println("Rows affected: " + result);
 //            session.update(query);
             tx.commit();
         } catch (HibernateException e) {
@@ -132,5 +130,21 @@ public class CustomerDAL {
             session.close();
         }
         return result;
+    }
+    
+    public static void main(String[] args) {
+        CustomerDAL dal = new CustomerDAL();
+        List listProduct = dal.getAllCustomer("DESC");
+        listProduct.forEach(s-> System.out.println(s.toString()));
+        //dal.updateProdct(1);
+        Customer c = new Customer();
+        c.setId(6);
+        c.setFirstName("Phú");
+        c.setLastName("Trần");
+        c.setPhoneNumber("0123456789");
+        dal.updateCustomer(c);
+//        dal.deleteProduct(22);
+        System.out.println("Element: "+dal.getCustomerById(1));
+
     }
 }

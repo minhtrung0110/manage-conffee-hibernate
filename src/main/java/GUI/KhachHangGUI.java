@@ -319,6 +319,8 @@ public class KhachHangGUI extends JPanel {
                         c.setFirstName(hoKH);
                         c.setLastName(tenKH);
                         c.setPhoneNumber(dienThoai);
+                        c.setAddress("");
+                        c.setStatus(0);
                         khBLL.add(c);
                         JOptionPane.showConfirmDialog(null, "\"Thêm khách hàng thành công !!!\"");
                         outModel(model, (ArrayList<Customer>) khBLL.getListCustomer());
@@ -371,8 +373,8 @@ public class KhachHangGUI extends JPanel {
          */
         Vector header = new Vector();
         header.add("Mă KH");
-        header.add("Tên KH");
-        header.add("Họ KH");
+        header.add("HỌ KH");
+        header.add("TÊN KH");
         header.add("SĐT");
         model = new MyTable(header, 5);
         tbl = new JTable(model);

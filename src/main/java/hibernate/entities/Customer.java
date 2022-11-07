@@ -15,33 +15,37 @@ import java.util.Set;
 @Entity
 @Table(name = "khachhang")
 public class Customer {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(name = "id_KH")
-private int id;
-@Column(name = "first_name")
-private String firstName;
-@Column(name = "last_name")
-private String lastName;
-@Column(name = "address")
-private String address;
-@Column(name = "phone")
-private String phoneNumber;
-@Column(name = "status")
-private int status;
 
-@OneToMany(mappedBy = "customer",fetch=FetchType.EAGER)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_KH")
+    private int id;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "address")
+    private String address;
+    @Column(name = "phone")
+    private String phoneNumber;
+    @Column(name = "status")
+    private int status;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private Set<Order> order;
 
-@Override public String toString() {
-    return "Customer( id="+id+" firstName= "+firstName+" lastName= "+lastName+" phone= "+phoneNumber+" status = "+status+")";
-}
-
-    public Customer(String firstName, String lastName, String phoneNumber) {
+    public Customer(int id, String firstName, String lastName, String address, String phoneNumber, int status) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.address = address;
         this.phoneNumber = phoneNumber;
+        this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "Customer{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", status=" + status + '}';
+    }
 
 }
