@@ -23,7 +23,6 @@ import org.hibernate.query.Query;
 public class OrderDAL{
     
     static final SessionFactory factory = HibernateUtils.getSessionFactory();
-    
      public List getAllOrder() {
         Session session = factory.openSession();
         List listOrder = null;

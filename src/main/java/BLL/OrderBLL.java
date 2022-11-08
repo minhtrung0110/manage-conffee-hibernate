@@ -185,21 +185,38 @@ import java.util.List;
 //    }
 //}
 
-public class HoaDonBLL {
-    private static List<Order> listProduct;
+public class OrderBLL {
     private OrderDAL dal = new OrderDAL();
 
-    public HoaDonBLL() {
+    public OrderBLL() {
     }
     public List<Order> getListOrder() {
-        return dal.getAllOrder();
+
+       try{
+           return dal.getAllOrder();
+       }
+       catch (Exception e) {
+           e.printStackTrace();
+       }
+       return null;
     }
 
-    public long getCountOrder(){
+    public long getCountOrder() {
+        try {
             return dal.getCount();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return 0;
+    }
 
     public long getTotalRevenue(){
-            return dal.getTotalRevenue();
-        }
+           try {
+               return dal.getTotalRevenue();
+           }
+           catch (Exception e) {
+               e.printStackTrace();
+           }
+           return 0;
+    }
 }
