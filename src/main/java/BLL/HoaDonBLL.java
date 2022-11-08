@@ -1,9 +1,14 @@
+package BLL;
+import DAL.OrderDAL;
+import hibernate.entities.Order;
+import java.util.List;
+
 ///*
 // * To change this license header, choose License Headers in Project Properties.
 // * To change this template file, choose Tools | Templates
 // * and open the template in the editor.
 // */
-//package BUS;
+
 //
 //import DAO.HoaDonDAO;
 //import DTO.HoaDonDTO;
@@ -179,3 +184,22 @@
 //        return ds;
 //    }
 //}
+
+public class HoaDonBLL {
+    private static List<Order> listProduct;
+    private OrderDAL dal = new OrderDAL();
+
+    public HoaDonBLL() {
+    }
+    public List<Order> getListOrder() {
+        return dal.getAllOrder("DESC");
+    }
+
+    public long getCountOrder(){
+            return dal.getCount();
+        }
+
+    public long getTotalRevenue(){
+            return dal.getTotalRevenue();
+        }
+}

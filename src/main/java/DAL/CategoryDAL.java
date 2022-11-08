@@ -3,11 +3,12 @@ package DAL;
 import hibernate.entities.Category;
 import hibernate.utils.HibernateUtils;
 import java.util.List;
-import javax.persistence.Query;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 public class CategoryDAL {
     
@@ -105,19 +106,28 @@ public class CategoryDAL {
         return result;
     }
     
+    public long getCount(){
+        Session session = factory.openSession();
+        long amount = 0;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createQuery("select count(*) from loai");
+            amount = (long)query.uniqueResult();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return amount;        
+    }
+    
     public static void main(String[] args) {
 //        new CategoryDAL().findAll().forEach(s->System.out.println(s));
 
         CategoryDAL dal = new CategoryDAL();
-        dal.findAll().forEach(s -> System.out.println(s));
-        
-        Category cate = new Category();
-        cate.setId(7);
-        cate.setName("Tre trau muon dam");
-//        dal.insertCategory(cate);
-//        System.out.println("Delete id 8!");
-//        dal.deleteCategory(8);
-        dal.updateCategory(cate);
-        dal.findAll().forEach(s -> System.out.println(s));
+        System.out.println("Count: "+String.valueOf(dal.getCount()));
     }
 }

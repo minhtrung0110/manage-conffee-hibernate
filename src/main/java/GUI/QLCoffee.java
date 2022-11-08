@@ -38,14 +38,7 @@ public class QLCoffee extends JFrame implements MouseListener {
     private int DEFAULT_HEIGHT = 730, DEFALUT_WIDTH = 1300;
     private ArrayList<String> navItem = new ArrayList<>();  //Chứa thông tin có button cho menu gồm
     private ArrayList<navItem> navObj = new ArrayList<>();  //Chứa cái button trên thanh menu
-//    private ArrayList<Integer> permissions = new ArrayList<>();
 
-//    public QLCoffee(String userId, String userName, int id_permission) throws FileNotFoundException {
-//        this.userId = userId;
-//        this.userName = userName;
-//        this.id_permission = id_permission;
-//        view();
-//    }
     public QLCoffee() throws FileNotFoundException, Exception {
         Toolkit screen = Toolkit.getDefaultToolkit();
         view();
@@ -83,22 +76,7 @@ public class QLCoffee extends JFrame implements MouseListener {
 
         header hmain = new header(DEFALUT_WIDTH, 40);
 
-//        if (userName != null) {
-//            JLabel user = new JLabel("Xin chào, " + userName);
-//            user.setFont(font);
-//            user.setForeground(Color.WHITE);
-//            user.setBounds(DEFALUT_WIDTH - 300, -7, 150, 50);
-//            hmain.add(user);
-//
-//            navItem btnLogOut = new navItem("", new Rectangle(DEFALUT_WIDTH - 150, -8, 50, 50), "logout_25px.png", "logout_25px.png", "logout_hover_25px.png", new Color(80, 80, 80));
-//            hmain.add(btnLogOut.isButton());
-//            btnLogOut.addMouseListener(new MouseAdapter() {
-//                public void mouseClicked() {
-////                    Login lg = new Login();
-//                    dispose();
-//                }
-//            });
-//        }
+
         //Tạo btn EXIT & MINIMIZE
         navItem exit = new navItem("", new Rectangle(DEFALUT_WIDTH - 50, -8, 50, 50), "exit_25px.png", "exit_25px.png", "exit_hover_25px.png", new Color(240, 71, 74));
         navItem mini = new navItem("", new Rectangle(DEFALUT_WIDTH - 100, -8, 50, 50), "minimize_25px.png", "minimize_25px.png", "minimize_hover_25px.png", new Color(80, 80, 80));
@@ -129,22 +107,11 @@ public class QLCoffee extends JFrame implements MouseListener {
         scroll.getVerticalScrollBar().setPreferredSize(new Dimension(1, 100));
         scroll.setHorizontalScrollBarPolicy(scroll.HORIZONTAL_SCROLLBAR_NEVER);
 
-//        ct_quyenBUS permisisondetail = new ct_quyenBUS();
-//        permisisondetail.getByIdPermission(id_permission);
-//        permisisondetail.bubbleSort();
-//        List<ct_quyenDTO> detail = permisisondetail.getPermissionList();
-//        for (ct_quyenDTO temp : detail) {
-//            CategoryBUS category = new CategoryBUS();
-//            CategoryDTO cate = category.getByIdDuty(temp.getid_duty());
-//            permissions.add(temp.getid_duty());
-//            navItem.add(cate.toString());
-//        }
+
         navItem = new ArrayList<>();  //Chứa thông tin có button cho menu gồm ( Tên btn : icon : icon hover )
         navItem.add("Bán hàng:Shop_20px.png:Shop_20px_active.png");
         navItem.add("Quản lý Sản Phẩm:QLSP_20px.png:QLSP_20px_active.png");
         navItem.add("Quản lý Khách Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
-        navItem.add("Nhà cung cấp:CongCu_20px.png:CongCu_20px_active.png");
-        navItem.add("Nhập & Xuất:ThongKe_20px.png:ThongKe_20px_active.png");
         navItem.add("Thống kê:ThongKe_20px.png:ThongKe_20px_active.png");
 
         outNav();
@@ -179,12 +146,6 @@ public class QLCoffee extends JFrame implements MouseListener {
         }
         if (!flag && navObj.size() > 8) //Đổi màu phần DropDown của thống kê
         {
-//            for (Integer permission : permissions) {
-//                if (permission == 5) {
-//                    navObj.get(permission - 1).setColorNormal(new Color(255, 177, 66));
-//                    navObj.get(permission).setColorNormal(new Color(255, 177, 66));
-//                }
-//            }
             navObj.get(4).setColorNormal(new Color(255, 177, 66));
             navObj.get(5).setColorNormal(new Color(255, 177, 66));
         }
@@ -203,10 +164,12 @@ public class QLCoffee extends JFrame implements MouseListener {
 
     public void changeMainInfo(int i) throws FileNotFoundException //Đổi Phần hiển thị khi bấm btn trên menu
     {
-//        if (flag && i > 4 && i < 8) // Thay đổi nếu Thông kế đang dropdown
-//        {
-//            i = i + 2;
-//        }
+       if (flag && i > 4 && i < 8) // Thay đổi nếu Thông kế đang dropdown
+       {
+           i = i + 2;
+       }
+       
+       //System.out.print(i);
         switch (i) {
             case 0: //  BÁN HÀNG 
                 main.removeAll();
@@ -216,79 +179,21 @@ public class QLCoffee extends JFrame implements MouseListener {
                 break;
             case 1: // QUẢN LÝ SẢN PHẨM
                 main.removeAll();
-              main.add(new SanPhamGUI(DEFALUT_WIDTH));
+                main.add(new SanPhamGUI(DEFALUT_WIDTH));
                 main.repaint();
                 main.revalidate();
                 break;
 
-            case 2: // QUẢN LÝ NHÂN VIÊN
+            case 2: // QUẢN LÝ KHÁCH HÀNG
                 main.removeAll();
-//                main.add(new NhanVienGUI(DEFALUT_WIDTH));
+                main.add(new KhachHangGUI(DEFALUT_WIDTH));
                 main.repaint();
                 main.revalidate();
                 break;
-            case 3: // QUẢN LÝ KHÁCH HÀNG
+
+            case 3: // THỐNG KÊ
                 main.removeAll();
-//                main.add(new KhachHangGUI(DEFALUT_WIDTH));
-                main.repaint();
-                main.revalidate();
-                break;
-            case 4: //NHẬP VẦ XUẤT
-                if (flag) {
-                    // Thêm 2 btn vào dưới thống kê
-//                    if (Collections.max() == 5) {
-//                        navItem.add(i, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
-//                        navItem.add(i + 1, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
-//                    } else {
-//                        navItem.add(i + 1, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
-//                        navItem.add(i + 2, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
-//                    }
-                    navItem.add(i + 1, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
-                    navItem.add(i + 2, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
-                    flag = false; // Thông báo là đang Dropdown thống kê
-                } else {
-                    // Xóa 2 btn của thống kê
-//                    if (Collections.max(permissions) == 5) {
-//                        navItem.remove(i);
-//                        navItem.remove(i);
-//                    } else {
-//                        navItem.remove(i + 1);
-//                        navItem.remove(i + 1);
-//                    }
-                    navItem.remove(i + 1);
-                    navItem.remove(i + 1);
-                    flag = true;  // Thông báo là Dropdown thống kê đă ẩn
-                }
-                outNav(); //Load lại phần Navigation
-                break;
-            case 5: // HOA DON
-                main.removeAll();
-                main.add(new HoaDonGUI(DEFALUT_WIDTH));
-                main.repaint();
-                main.revalidate();
-                break;
-            case 6: // NHẬP HÀNG
-                main.removeAll();
-//                main.add(new Page404(DEFALUT_WIDTH, "THỐNG KÊ - NHẬP HÀNG"));
-//                main.add(new NhapHangGUI(DEFALUT_WIDTH));
-                main.repaint();
-                main.revalidate();
-                break;
-            case 7: //NHÀ CUNG CẤP
-                main.removeAll();
-//                main.add(new NhaCungCapGUI(DEFALUT_WIDTH));
-                main.repaint();
-                main.revalidate();
-                break;
-            case 8: //USER
-                main.removeAll();
-//                main.add(new TaiKhoanGUI(DEFALUT_WIDTH));
-                main.repaint();
-                main.revalidate();
-                break;
-            case 9: // THỐNG KÊ
-                main.removeAll();
-//                main.add(new ThongKeGUI(DEFALUT_WIDTH));
+                main.add(new ThongKeGUI(DEFALUT_WIDTH));
                 main.repaint();
                 main.revalidate();
                 break;

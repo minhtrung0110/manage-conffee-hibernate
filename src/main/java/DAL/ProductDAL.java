@@ -8,8 +8,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import javax.persistence.Query;
+
 import java.util.List;
+import org.hibernate.query.Query;
 
 public class ProductDAL {
     static final SessionFactory factory = HibernateUtils.getSessionFactory();
@@ -120,21 +121,31 @@ public class ProductDAL {
         }
         return result;
     }
+    
+    public long getCount(){
+        Session session = factory.openSession();
+        long amount = 0;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createQuery("select count(*) from Product");
+            amount = (long)query.uniqueResult();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return amount;        
+    }
+    
     public static void main(String[] args) {
         ProductDAL dal = new ProductDAL();
-        List listProduct = dal.getAllProduct("DESC");
-        listProduct.forEach(s-> System.out.println(s.toString()));
-        //dal.updateProdct(1);
-        Product product = new Product();
-        product.setCategory(new Category(1,"Trồn Là"));
-        product.setAmount(250);
-        product.setName("Trà Bóng Siêu Cươi");
-        product.setImage("Dapda.img");
-        product.setDescription("Đá và Lời Ra");
-        product.setPrice(2500000);
-        dal.insertProdct(product);
-        dal.deleteProduct(22);
-        System.out.println("Element: "+dal.getProductById(20));
+        
+        System.out.println("Count: "+String.valueOf(dal.getCount()));
+        
+        
 
     }
 }
