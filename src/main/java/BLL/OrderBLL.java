@@ -1,17 +1,23 @@
 package BLL;
 
 import DAL.OrderDAL;
+import hibernate.entities.Customer;
 import hibernate.entities.Order;
+import hibernate.entities.OrderDetail;
+import hibernate.entities.Product;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class OrderBLL {
     private List<Order> hdBLL;
+    private OrderDAL orderDAL = new OrderDAL();
+
 
     public OrderBLL() {
-        hdBLL = null;
+        list();
     }
 
     public List<Order> getOrderBLL() {
@@ -19,11 +25,9 @@ public class OrderBLL {
     }
 
     public void list() {
-        OrderDAL orderDAL = new OrderDAL();
         hdBLL = new ArrayList<>();
         hdBLL = orderDAL.getAllOrder("DESC");
     }
-
 
 
     public void delete(String id) {
@@ -38,46 +42,56 @@ public class OrderBLL {
         }
     }
 
-//    public void set(HoaDonDTO hoaDonDTO) {
-//        for (int i = 0; i < hdBUS.size(); i++) {
-//            if (hdBUS.get(i).getId() == hoaDonDTO.getId()) {
-//                hdBUS.set(i, hoaDonDTO);
-//                HoaDonDAO hdDAO = new HoaDonDAO();
-//                try {
-//                    hdDAO.update(hoaDonDTO);
-//                } catch (FileNotFoundException e) {
-//                    System.out.println(e.getMessage());
-//                }
+//    public void set(Order hoaDonDTO) {
+//        for (int i = 0; i < hdBLL.size(); i++) {
+//            if (hdBLL.get(i).getId() == hoaDonDTO.getId()) {
+//                hdBLL.set(i, hoaDonDTO);
+//                OrderDAL hdDAO = new OrderDAL();
+//                hdDAO.updateOrder(hoaDonDTO);
 //                return;
 //            }
 //        }
 //    }
 
-//    public String remindMaHD() {
-//        int max = 0;
-//        String s = "";
-//        for (HoaDonDTO hd : hdBUS) {
-//            int id = hd.getId();
-//            if (id > max) {
-//                max = id;
-//            }
-//        }
-//        for (int i = 0; i < 3 - String.valueOf(max + 1).length(); i++) {
-//            s += "0";
-//        }
-//        return s + (max + 1);
-//    }
-//
-//    public boolean check(String maHD) {
-//        for (HoaDonDTO hd : hdBUS) {
-//            if (String.valueOf(hd.getId()).equals(maHD)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public Order getOrderById(int id) {
+        try {
+            return orderDAL.getOrderById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-//    //phần thống kê
+    public void insertOrder(Order hd) {
+        hdBLL.add(hd);
+        orderDAL.insertOrder(hd);
+    }
+
+    public String remindMaHD() {
+        int max = 0;
+        String s = "";
+        for (Order hd : hdBLL) {
+            int id = hd.getId();
+            if (id > max) {
+                max = id;
+            }
+        }
+        for (int i = 0; i < 3 - String.valueOf(max + 1).length(); i++) {
+            s += "0";
+        }
+        return s + (max + 1);
+    }
+
+    public boolean check(String maHD) {
+        for (Order hd : hdBLL) {
+            if (String.valueOf(hd.getId()).equals(maHD)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //    //phần thống kê
 //    public boolean checkTime(Calendar from, Calendar to, Calendar time) {
 ////        System.err.print(from.getTime()+" ");
 ////        System.err.print(to.getTime()+" ");
@@ -101,58 +115,72 @@ public class OrderBLL {
 //        return list;
 //    }
 //
-//    public ArrayList<HoaDonDTO> search(int mm, int yyyy, double max, double min, int mahd) {
-//        int mm1 = 0, mm2 = 12;
-//        int yyy1 = 0, yyy2 = Calendar.getInstance().get(Calendar.YEAR);
-//
-//        if (mm != -1) {
-//            mm1 = mm;
-//            mm2 = mm;
-//        }
-//        if (yyyy != 0) {
-//            yyy1 = yyyy;
-//            yyy2 = yyyy;
-//        }
-//
-//        ArrayList<HoaDonDTO> search = new ArrayList<>();
-//        for (HoaDonDTO hd : hdBUS) {
-//            Timestamp time = hd.getCreate_day();
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTimeInMillis(time.getTime());;
-//
-//            int month = calendar.get(Calendar.MONTH);
-//            int year = calendar.get(Calendar.YEAR);
-//
-//            if (hd.getTotal_money() >= min && hd.getTotal_money() <= max
-//                    && (month >= mm1 && month <= mm2)
-//                    && (year >= yyy1 && year <= yyy2)) {
-//                if (mahd != 0 && hd.getId() == mahd) {
-//                    search.clear();
-//                    search.add(hd);
-//                    break;
-//                }
-//                if (mahd != 0 && hd.getId() != mahd) {
-//                    search.clear();
-//                }
-//                search.add(hd);
-//            }
-//        }
-//        return search;
-//    }
-//
-//    public ArrayList<HoaDonDTO> getListWidthArray(ArrayList<String> s) {
-//        ArrayList<HoaDonDTO> ds = new ArrayList<>();
-//        if (s == null) {
-//            return (ArrayList<HoaDonDTO>) hdBUS;
-//        }
-//        for (HoaDonDTO hd : hdBUS) {
-//            String mahd = String.valueOf(hd.getId());
-//            for (String a : s) {
-//                if (mahd.equals(a)) {
-//                    ds.add(hd);
-//                }
-//            }
-//        }
-//        return ds;
-//    }
+    public ArrayList<Order> search(int mm, int yyyy, double max, double min, int mahd) {
+        int mm1 = 0, mm2 = 12;
+        int yyy1 = 0, yyy2 = Calendar.getInstance().get(Calendar.YEAR);
+
+        if (mm != -1) {
+            mm1 = mm;
+            mm2 = mm;
+        }
+        if (yyyy != 0) {
+            yyy1 = yyyy;
+            yyy2 = yyyy;
+        }
+
+        ArrayList<Order> search = new ArrayList<>();
+        for (Order hd : hdBLL) {
+            Date date = hd.getCreatedDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(date.getTime());
+
+            int month = calendar.get(Calendar.MONTH);
+            int year = calendar.get(Calendar.YEAR);
+
+            if (hd.getTotalPrice() >= min && hd.getTotalPrice() <= max
+                    && (month >= mm1 && month <= mm2)
+                    && (year >= yyy1 && year <= yyy2)) {
+                if (mahd != 0 && hd.getId() == mahd) {
+                    search.clear();
+                    search.add(hd);
+                    break;
+                }
+                if (mahd != 0 && hd.getId() != mahd) {
+                    search.clear();
+                }
+                search.add(hd);
+            }
+        }
+        return search;
+    }
+
+    public ArrayList<Order> getListWidthArray(ArrayList<String> s) {
+        ArrayList<Order> ds = new ArrayList<>();
+        if (s == null) {
+            return (ArrayList<Order>) hdBLL;
+        }
+        for (Order hd : hdBLL) {
+            String mahd = String.valueOf(hd.getId());
+            for (String a : s) {
+                if (mahd.equals(a)) {
+                    ds.add(hd);
+                }
+            }
+        }
+        return ds;
+    }
+
+    public static void main(String[] args) {
+        Customer customer = new CustomerBLL().getCustomerById(4);
+        List<OrderDetail> listOrderDetail = new OrderDetailBLL(1).getCt_hdBLL();
+        Order order = new Order(4, 200f, new Date(), 1, customer, listOrderDetail);
+
+        OrderBLL bll = new OrderBLL();
+//        bll.list();
+//        bll.getOrderBLL().forEach(System.out::println);
+
+//        System.out.println(bll.getOrderById(1));
+
+        bll.insertOrder(order);
+    }
 }

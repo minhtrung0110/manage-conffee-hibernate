@@ -25,6 +25,9 @@ public class OrderDetail {
     @JoinColumn(name = "id_SP",nullable = false,foreignKey = @ForeignKey(name = "product_ibfk_2"))
     private Product product;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "amount")
     private int amount;
     @Column(name = "price")

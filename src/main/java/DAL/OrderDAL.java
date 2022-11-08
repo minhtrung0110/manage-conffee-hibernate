@@ -1,9 +1,16 @@
 package DAL;
 
+import BLL.CustomerBLL;
+import BLL.OrderDetailBLL;
 import hibernate.entities.Category;
+import hibernate.entities.Customer;
+import hibernate.entities.OrderDetail;
 import hibernate.entities.Order;
 import hibernate.entities.Product;
 import hibernate.utils.HibernateUtils;
+
+import java.util.Date;
+import java.util.HashSet;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,6 +18,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 //import javax.persistence.Query;
 import java.util.List;
+import java.util.Set;
 
 public class OrderDAL {
     static final SessionFactory factory = HibernateUtils.getSessionFactory();
@@ -77,6 +85,56 @@ public class OrderDAL {
         return result;
     }
 
+    public int updateOrder(Order order){
+        System.out.println("A - "+order);
+        Session session = factory.openSession();
+        int result = 0;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            String hql = "UPDATE hoadon SET id_KH = :id_KH , id_NV = :id_NV" +
+                    ", total_money  = :total_money, create_day  = :create_day WHERE id = :id";
+
+            Query query = session.createQuery(hql);
+
+            query.setParameter("id_KH", order.getCustomer().getId());
+            query.setParameter("id_NV", order.getId_Staff());
+            query.setParameter("total_money", order.getTotalPrice());
+            query.setParameter("create_day", order.getCreatedDate());
+            query.setParameter("id", order.getId());
+            System.out.println(hql);
+            result = query.executeUpdate();
+           System.out.println("Rows affected: " + result);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return result;
+    }
+
+    public int insertOrder(Order order){
+        Session session = factory.openSession();
+        int result = 1;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.save(order);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+
+            e.printStackTrace();
+            return 0;
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+
     public long getCount(){
         Session session = factory.openSession();
         long amount = 0;
@@ -92,9 +150,9 @@ public class OrderDAL {
         } finally {
             session.close();
         }
-        return amount;        
+        return amount;
     }
-    
+
     public int getTotalRevenue(){
         Session session = factory.openSession();
         double total = 0;
@@ -110,6 +168,26 @@ public class OrderDAL {
         } finally {
             session.close();
         }
-        return (int)total;  
+        return (int)total;
+    }
+
+    public static void main(String[] args) {
+//        new OrderDAL().getAllOrder("DESC").forEach(s->System.out.println(s));
+
+//        Customer customer = new CustomerDAL().getCustomerById(2);
+//        System.out.println(customer);
+//        List<OrderDetail> orderDetail = new OrderDetailDAL().getAllOrderDetail(2);
+//        orderDetail.forEach(System.out::println);
+        OrderDAL dal = new OrderDAL();
+//        Order order = new Order(1, 21112001f, new Date(), 1, customer, orderDetail);
+//        dal.updateOrder(order);
+
+        Customer customer = new CustomerBLL().getCustomerById(4);
+        List<OrderDetail> listOrderDetail = new OrderDetailBLL(1).getCt_hdBLL();
+        Order order = new Order(3, 200f, new Date(), 1, customer, listOrderDetail);
+        dal.insertOrder(order);
+
+
+
     }
 }

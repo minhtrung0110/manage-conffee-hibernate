@@ -1,5 +1,10 @@
 package DAL;
 
+import BLL.OrderBLL;
+import BLL.SanPhamBLL;
+import hibernate.entities.Order;
+import hibernate.entities.OrderDetail;
+import hibernate.entities.Product;
 import hibernate.utils.HibernateUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -46,24 +51,24 @@ public class OrderDetailDAL {
         }
         return orderDetailDAL;
     }
-//    public int insertProdct(Product product){
-//        Session session = factory.openSession();
-//        int result = 1;
-//        Transaction tx = null;
-//        try {
-//            tx = session.beginTransaction();
-//            session.save(product);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null) tx.rollback();
-//
-//            e.printStackTrace();
-//            return 0;
-//        } finally {
-//            session.close();
-//        }
-//        return result;
-//    }
+    public int insertOrderdetail(OrderDetail orderDetail){
+        Session session = factory.openSession();
+        int result = 1;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.save(orderDetail);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+
+            e.printStackTrace();
+            return 0;
+        } finally {
+            session.close();
+        }
+        return result;
+    }
 //    public int updateProduct(Product product){
 //        System.out.println("A - "+product);
 //        Session session = factory.openSession();
@@ -119,4 +124,16 @@ public class OrderDetailDAL {
         return result;
     }
 
+    public static void main(String[] args) {
+        OrderBLL odbll = new OrderBLL();
+        Order order = odbll.getOrderById(1);
+
+        SanPhamBLL spbll = new SanPhamBLL();
+        Product product = spbll.getProductById(2);
+
+        OrderDetailDAL dal = new OrderDetailDAL();
+        OrderDetail orderDetail = new OrderDetail(3, order, product,product.getName(), 2, 1000);
+//        System.out.println(orderDetail);
+        dal.insertOrderdetail(orderDetail);
+    }
 }

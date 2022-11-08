@@ -1,10 +1,14 @@
 package BLL;
 
 import DAL.OrderDetailDAL;
+import DAL.ProductDAL;
+import hibernate.entities.Order;
 import hibernate.entities.OrderDetail;
+import hibernate.entities.Product;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class OrderDetailBLL {
@@ -31,15 +35,11 @@ public class OrderDetailBLL {
         orderDetailsBLL = orderDetailDAL.getAllOrderDetail(orderID);
     }
 
-//    public void add(ct_HoaDonDTO cthdDTO) {
-//        ct_hdBUS.add(cthdDTO);
-//        ct_HDDAO cthdDAO = new ct_HDDAO();
-//        try {
-//            cthdDAO.save(cthdDTO);
-//        } catch (FileNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
+    public void add(OrderDetail cthdDTO) {
+        orderDetailsBLL.add(cthdDTO);
+        OrderDetailDAL cthdDAO = new OrderDetailDAL();
+        cthdDAO.insertOrderdetail(cthdDTO);
+    }
 
     public void delete(String id) {
         int idHD = Integer.parseInt(id);
@@ -84,4 +84,17 @@ public class OrderDetailBLL {
 //            }
 //        }
 //    }
+
+    public static void main(String[] args) {
+        OrderBLL odbll = new OrderBLL();
+        Order order = odbll.getOrderById(1);
+
+        SanPhamBLL spbll = new SanPhamBLL();
+        Product product = spbll.getProductById(7);
+
+        OrderDetail orderDetail = new OrderDetail(4,order, product,product.getName(), 2, 10000);
+        System.out.println(orderDetail);
+        OrderDetailBLL bll = new OrderDetailBLL(1);
+        bll.add(orderDetail);
+    }
 }
