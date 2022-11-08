@@ -28,24 +28,24 @@ public class Customer {
     private String address;
     @Column(name = "phone")
     private String phoneNumber;
-    @Column(name = "status")
-    private int status;
+    @Column(name = "email")
+    private String email;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private Set<Order> order;
 
-    public Customer(int id, String firstName, String lastName, String address, String phoneNumber, int status) {
+    public Customer(int id, String firstName, String lastName, String address, String phoneNumber, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.status = status;
+        this.email = email;
     }
 
     @Override
     public String toString() {
-        return "Customer{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", status=" + status + '}';
+        return "Customer{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", email =" + email + '}';
     }
 
 }

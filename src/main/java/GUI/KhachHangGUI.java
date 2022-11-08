@@ -319,8 +319,8 @@ public class KhachHangGUI extends JPanel {
                         c.setFirstName(hoKH);
                         c.setLastName(tenKH);
                         c.setPhoneNumber(dienThoai);
-                        c.setAddress("");
-                        c.setStatus(0);
+                        c.setAddress("congso8siettayem");
+                        c.setEmail("phumecongso8");
                         khBLL.add(c);
                         JOptionPane.showConfirmDialog(null, "\"Thêm khách hàng thành công !!!\"");
                         outModel(model, (ArrayList<Customer>) khBLL.getListCustomer());

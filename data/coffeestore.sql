@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2022 at 02:27 PM
+-- Generation Time: Nov 08, 2022 at 04:57 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -42,7 +42,13 @@ CREATE TABLE `ct_hoadon` (
 
 INSERT INTO `ct_hoadon` (`id`, `id_HD`, `id_SP`, `name`, `amount`, `price`) VALUES
 (1, 2, 8, 'Latte', 2, 50000),
-(2, 2, 4, 'Chocolate Đá Xay', 3, 55000);
+(2, 2, 4, 'Chocolate Đá Xay', 3, 55000),
+(3, 3, 13, '', 5, 80000),
+(4, 4, 13, '', 2, 100000),
+(5, 4, 5, '', 5, 50000),
+(6, 4, 7, '', 1, 50000),
+(7, 5, 7, '', 1, 50000),
+(8, 5, 2, '', 2, 100000);
 
 -- --------------------------------------------------------
 
@@ -90,8 +96,11 @@ CREATE TABLE `hoadon` (
 --
 
 INSERT INTO `hoadon` (`id`, `id_KH`, `id_NV`, `total_money`, `create_day`) VALUES
-(1, 1, 1, 260000, '2021-05-12 07:20:02'),
-(2, 1, 1, 324000, '2021-05-16 11:22:06');
+(1, 1, 1, 260000, '2021-10-30 07:20:02'),
+(2, 1, 1, 324000, '2021-10-29 11:22:06'),
+(3, 5, 1, 400000, '2022-11-08 03:51:22'),
+(4, 3, 1, 550000, '2022-11-08 03:51:39'),
+(5, 6, 1, 250000, '2022-11-12 03:52:06');
 
 -- --------------------------------------------------------
 
@@ -104,21 +113,22 @@ CREATE TABLE `khachhang` (
   `first_name` varchar(20) DEFAULT NULL,
   `last_name` varchar(20) DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
-  `address` varchar(255) NOT NULL,
-  `status` int(11) NOT NULL
+  `email` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `khachhang`
 --
 
-INSERT INTO `khachhang` (`id_KH`, `first_name`, `last_name`, `phone`, `address`, `status`) VALUES
-(1, 'Quá', 'Dương', '0124352565', '', 0),
-(2, 'Như', 'Võ', '0893757393', '', 0),
-(3, 'Long', 'Cô', '08577568343', '', 0),
-(4, 'Tiễn', 'Dương', '0868358383', '', 0),
-(5, 'Tào', 'Tháo', '0249289385', '', 0),
-(6, 'Thanh Thiên', 'Thiên', '0586538533', '', 0);
+INSERT INTO `khachhang` (`id_KH`, `first_name`, `last_name`, `phone`, `email`, `address`) VALUES
+(1, 'Quá', 'Dương', '0124352565', 'cutmetayroi@gmail.com', '12/234 Hung Vuong, Q5, HCM, VN'),
+(2, 'Như', 'Võ', '0893757393', 'ngaymaihay@gmail.com', '124 Le Minh Xuan, Binh Chanh, HCM, VN'),
+(3, 'Long', 'Cô', '08577568343', 'hocgioijava@gmail.com', '275 An Duong Vuong, Q5, HCM, VN'),
+(4, 'Tiễn', 'Dương', '0868358383', 'nguyenvanC99@gmail.com', '121 Tran Hung Dao, Q1, HCM, VN'),
+(5, 'Tào', 'Tháo', '0249289385', 'anhnhoem256i@gmail.com', '456 Duong Bo , Binh Thanh, HCM, VN'),
+(6, 'Thanh Thiên', 'Thiên', '0586538533', 'myheart2598@gmail.com', '15 Ly Tu Trong, Q1, HCM, VN'),
+(7, 'Phú Cháu Cô', 'Lan', '09021212121', 'phumecongso8@gmail.com', '1114 Đ. Nam Kỳ Khởi Nghĩa');
 
 -- --------------------------------------------------------
 
@@ -201,7 +211,7 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`id_SP`, `id_Loai`, `name`, `description`, `amount`, `price`, `img`) VALUES
-(1, 1, 'Bánh Mì Chà Bông Phô Mai', 'Bánh mì tươi kết hợp với chà bông và phô mai', 25, 30000, 'bky-001.jpg'),
+(1, 1, 'Coffee vị bánh trắng', 'Bánh mì tươi kết hợp với chà bông và phô mai', 25, 30000, 'bky-001.jpg'),
 (2, 1, 'Bánh Bông Lan Trứng Muối', 'Bánh mềm xốp kết hợp trứng muối thơm ngon', 25, 30000, 'bky-002.jpg'),
 (3, 1, 'Bánh Mì Chả Lụa Xá Xíu', 'Bánh mì giòn thơm với chả lụa và thịt xá xíu thơm ngon, kết hợp cùng rau và gia vị, hòa quyện cùng n', 25, 20000, 'bky-003.jpg'),
 (4, 2, 'Mousse Canh Dây', 'Một sự kết hợp khéo léo giữa kem và lớp bánh mềm, được phủ lên trên xốt chanh dây ngon tuyệt.', 25, 29000, 'cak-001.jpg'),
@@ -221,7 +231,11 @@ INSERT INTO `sanpham` (`id_SP`, `id_Loai`, `name`, `description`, `amount`, `pri
 (18, 6, 'Trà Vải - Lài', 'Trà lài thanh nhẹ kết hợp cùng vải tươi', 25, 50000, 'frt-003-4.jpg'),
 (19, 7, 'Trà Lài', 'Trà lài hương vị truyền thống', 25, 35000, 'tea-001-2-3-4.jpg'),
 (20, 7, 'Trà Xanh', 'Trà xanh hương vị truyền thống', 25, 35000, 'tea-001-2-3-4.jpg'),
-(21, 7, 'Trà Ô Long', 'Trà ô long thơm ngon tuyệt hảo', 25, 35000, 'tea-001-2-3-4.jpg');
+(21, 7, 'Trà Ô Long', 'Trà ô long thơm ngon tuyệt hảo', 25, 35000, 'tea-001-2-3-4.jpg'),
+(28, 1, 'Trà Bóng Siêu Cười', 'Đá vào Lời Ra', 10, 90000, 'Dapda.img'),
+(29, 1, 'Bánh Phê Pha', 'Ăn Vào Phê 1 Tháng', 10, 500000, 'ME5Fu3FY.jpg'),
+(30, 4, 'Cà Phê Vị Bánh Trắng', 'Phê PhanCung Em Đêm Nay', 10, 9000000, 'sNVVjAkl.jpg'),
+(31, 1, 'Còng Số 8 Siết Tay Em', 'Cho Anh Bay Cùng Em Đêm Nay', 10, 88888, 'UFd8rL3p.jpg');
 
 --
 -- Indexes for dumped tables
@@ -290,7 +304,7 @@ ALTER TABLE `sanpham`
 -- AUTO_INCREMENT for table `ct_hoadon`
 --
 ALTER TABLE `ct_hoadon`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `danhmuc`
@@ -302,13 +316,13 @@ ALTER TABLE `danhmuc`
 -- AUTO_INCREMENT for table `hoadon`
 --
 ALTER TABLE `hoadon`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `id_KH` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_KH` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `loai`
@@ -332,7 +346,7 @@ ALTER TABLE `nguyenlieudadung`
 -- AUTO_INCREMENT for table `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `id_SP` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_SP` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables
