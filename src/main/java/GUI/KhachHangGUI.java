@@ -86,41 +86,45 @@ public class KhachHangGUI extends JPanel {
         JLabel lbMaKH = new JLabel("Mă khách hàng");
         txtMaKH = new JTextField("");
         lbMaKH.setBounds(new Rectangle(50, 0, 200, 30));
-        lbMaKH.setFont(font0);
+        lbMaKH.setFont(font1);
         txtMaKH.setBounds(new Rectangle(150, 0, 220, 30));
+        txtMaKH.setFont(font0);
         txtMaKH.setEditable(false);
 
         JLabel lbSDT = new JLabel("Số điện thoại");
         txtSDT = new JTextField("");
         lbSDT.setBounds(new Rectangle(400, 0, 100, 30));
-        lbSDT.setFont(font0);
+        lbSDT.setFont(font1);
         txtSDT.setBounds(new Rectangle(500, 0, 220, 30));
+        txtSDT.setFont(font0);
 
         JLabel lbTenKH = new JLabel("Tên");
         txtTenKH = new JTextField("");
         lbTenKH.setBounds(new Rectangle(50, 40, 200, 30));
-        lbTenKH.setFont(font0);
+        lbTenKH.setFont(font1);
         txtTenKH.setBounds(new Rectangle(150, 40, 220, 30));
+        txtTenKH.setFont(font0);
 
         JLabel lbHoKH = new JLabel("Họ");
         txtHoKH = new JTextField("");
         lbHoKH.setBounds(new Rectangle(400, 40, 200, 30));
-        lbHoKH.setFont(font0);
+        lbHoKH.setFont(font1);
         txtHoKH.setBounds(new Rectangle(500, 40, 220, 30));
+        txtHoKH.setFont(font0);
 
         JLabel lblAddress = new JLabel("Địa chỉ");
         txtAddress = new JTextField("");
         lblAddress.setBounds(new Rectangle(50, 80, 200, 30));
-        lblAddress.setFont(font0);
+        lblAddress.setFont(font1);
         txtAddress.setBounds(new Rectangle(150, 80, 220, 30));
-
+        txtAddress.setFont(font0);
 
         JLabel lblEmail = new JLabel("Email");
         txtEmail = new JTextField("");
         lblEmail.setBounds(new Rectangle(400, 80, 200, 30));
-        lblEmail.setFont(font0);
+        lblEmail.setFont(font1);
         txtEmail.setBounds(new Rectangle(500, 80, 220, 30));
-
+        txtEmail.setFont(font0);
 
         // THÊM VÀO PHẦN HIỂN THỊ
         itemView.add(lbMaKH);
@@ -332,7 +336,7 @@ public class KhachHangGUI extends JPanel {
                         String diachi = txtAddress.getText();
                         String email = txtEmail.getText();
 
-                        if (hoKH.equals("") && tenKH.equals("") && dienThoai.equals("")) {
+                        if (hoKH.equals("") || tenKH.equals("") || dienThoai.equals("") || diachi.equals("") || email.equals("")) {
                             JOptionPane.showConfirmDialog(null, "\"Vui lòng nhập đầy đủ thông tin !!!\"");
                             return;
                         }
@@ -344,8 +348,8 @@ public class KhachHangGUI extends JPanel {
                         c.setAddress(diachi);
                         c.setEmail(email);
                         khBLL.add(c);
-                        JOptionPane.showConfirmDialog(null, "\"Thêm khách hàng thành công !!!\"");
                         outModel(model, (ArrayList<Customer>) khBLL.getListCustomer());
+                        JOptionPane.showConfirmDialog(null, "\"Thêm khách hàng thành công !!!\"");
                         cleanView();
                     }
 
@@ -374,7 +378,7 @@ public class KhachHangGUI extends JPanel {
                         String diachi = txtAddress.getText();
                         String email = txtEmail.getText();
 
-                        if (!hoKH.equals("") && !tenKH.equals("") && !dienThoai.equals("") && !diachi.equals("") && !email.equals("")) {
+                        if (hoKH.equals("") || tenKH.equals("") || dienThoai.equals("") || diachi.equals("") || email.equals("")) {
                             JOptionPane.showConfirmDialog(null, "Vui lòng nhập đầy đủ thông tin !!!");
                         }
                         Customer c = new Customer();
