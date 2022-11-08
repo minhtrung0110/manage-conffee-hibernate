@@ -6,6 +6,7 @@ package GUI;
 
 import BLL.CustomerBLL;
 import hibernate.entities.Customer;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -20,7 +21,9 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import static javax.swing.BorderFactory.createLineBorder;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -39,7 +42,6 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
- *
  * @author Trần Kim Phú
  */
 public class KhachHangGUI extends JPanel {
@@ -48,7 +50,7 @@ public class KhachHangGUI extends JPanel {
     private CustomerBLL khBLL = new CustomerBLL();
 
     private JTable tbl;
-    private JTextField txtMaKH, txtHoKH, txtTenKH, txtSDT;
+    private JTextField txtMaKH, txtHoKH, txtTenKH, txtSDT, txtEmail, txtAddress;
     private JTextField sortMaKH, sortHoKH, sortTenKH;
     private DefaultTableModel model;
     private int DEFALUT_WIDTH;
@@ -106,6 +108,20 @@ public class KhachHangGUI extends JPanel {
         lbHoKH.setFont(font0);
         txtHoKH.setBounds(new Rectangle(500, 40, 220, 30));
 
+        JLabel lblAddress = new JLabel("Địa chỉ");
+        txtAddress = new JTextField("");
+        lblAddress.setBounds(new Rectangle(50, 80, 200, 30));
+        lblAddress.setFont(font0);
+        txtAddress.setBounds(new Rectangle(150, 80, 220, 30));
+
+
+        JLabel lblEmail = new JLabel("Email");
+        txtEmail = new JTextField("");
+        lblEmail.setBounds(new Rectangle(400, 80, 200, 30));
+        lblEmail.setFont(font0);
+        txtEmail.setBounds(new Rectangle(500, 80, 220, 30));
+
+
         // THÊM VÀO PHẦN HIỂN THỊ
         itemView.add(lbMaKH);
         itemView.add(txtMaKH);
@@ -115,6 +131,10 @@ public class KhachHangGUI extends JPanel {
         itemView.add(txtTenKH);
         itemView.add(lbSDT);
         itemView.add(txtSDT);
+        itemView.add(lblAddress);
+        itemView.add(txtAddress);
+        itemView.add(lblEmail);
+        itemView.add(txtEmail);
 
         add(itemView);
 
@@ -309,6 +329,8 @@ public class KhachHangGUI extends JPanel {
                         String hoKH = txtHoKH.getText();
                         String tenKH = txtTenKH.getText();
                         String dienThoai = txtSDT.getText();
+                        String diachi = txtAddress.getText();
+                        String email = txtEmail.getText();
 
                         if (hoKH.equals("") && tenKH.equals("") && dienThoai.equals("")) {
                             JOptionPane.showConfirmDialog(null, "\"Vui lòng nhập đầy đủ thông tin !!!\"");
@@ -319,8 +341,8 @@ public class KhachHangGUI extends JPanel {
                         c.setFirstName(hoKH);
                         c.setLastName(tenKH);
                         c.setPhoneNumber(dienThoai);
-                        c.setAddress("congso8siettayem");
-                        c.setEmail("phumecongso8");
+                        c.setAddress(diachi);
+                        c.setEmail(email);
                         khBLL.add(c);
                         JOptionPane.showConfirmDialog(null, "\"Thêm khách hàng thành công !!!\"");
                         outModel(model, (ArrayList<Customer>) khBLL.getListCustomer());
@@ -349,8 +371,10 @@ public class KhachHangGUI extends JPanel {
                         String hoKH = txtHoKH.getText();
                         String tenKH = txtTenKH.getText();
                         String dienThoai = txtSDT.getText();
+                        String diachi = txtAddress.getText();
+                        String email = txtEmail.getText();
 
-                        if (!hoKH.equals("") && !tenKH.equals("") && !dienThoai.equals("")) {
+                        if (!hoKH.equals("") && !tenKH.equals("") && !dienThoai.equals("") && !diachi.equals("") && !email.equals("")) {
                             JOptionPane.showConfirmDialog(null, "Vui lòng nhập đầy đủ thông tin !!!");
                         }
                         Customer c = new Customer();
@@ -358,6 +382,8 @@ public class KhachHangGUI extends JPanel {
                         c.setFirstName(hoKH);
                         c.setLastName(tenKH);
                         c.setPhoneNumber(dienThoai);
+                        c.setAddress(diachi);
+                        c.setEmail(email);
                         khBLL.update(c);
                         outModel(model, (ArrayList<Customer>) khBLL.getListCustomer());// Load lại table                        
                         JOptionPane.showConfirmDialog(null, "Sửa thông tin khách hàng thành công");
@@ -373,9 +399,11 @@ public class KhachHangGUI extends JPanel {
          */
         Vector header = new Vector();
         header.add("Mă KH");
-        header.add("HỌ KH");
         header.add("TÊN KH");
+        header.add("HỌ KH");
         header.add("SĐT");
+        header.add("ĐỊA CHỈ");
+        header.add("EMAIL");
         model = new MyTable(header, 5);
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
@@ -426,6 +454,8 @@ public class KhachHangGUI extends JPanel {
                     txtTenKH.setText(tbl.getModel().getValueAt(i, 1).toString());
                     txtHoKH.setText(tbl.getModel().getValueAt(i, 2).toString());
                     txtSDT.setText(tbl.getModel().getValueAt(i, 3).toString());
+                    txtAddress.setText(tbl.getModel().getValueAt(i, 4).toString());
+                    txtEmail.setText(tbl.getModel().getValueAt(i, 5).toString());
                 }
             }
         });
@@ -440,8 +470,8 @@ public class KhachHangGUI extends JPanel {
         JComboBox cmbChoice = new JComboBox();
         cmbChoice.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         cmbChoice.addItem("Mã KH");//cmbchoice index = 0
-        cmbChoice.addItem("Tên KH");//1
-        cmbChoice.addItem("Họ KH");//2
+        cmbChoice.addItem("TÊN KH");//1
+        cmbChoice.addItem("HỌ KH");//2
         cmbChoice.addItem("SĐT");//3
         cmbChoice.setBounds(new Rectangle(0, 0, 120, 30));
         cmbChoice.setEditable(false);
@@ -520,6 +550,8 @@ public class KhachHangGUI extends JPanel {
         txtHoKH.setText("");
         txtTenKH.setText("");
         txtSDT.setText("");
+        txtAddress.setText("");
+        txtEmail.setText("");
 
     }
 
@@ -532,8 +564,10 @@ public class KhachHangGUI extends JPanel {
             data.add(n.getId());//indext table = 0
             data.add(n.getFirstName());//1
             data.add(n.getLastName());//2
-            data.add(n.getPhoneNumber());//3 ý dòng xết ấy
-            model.addRow(data);
+            data.add(n.getPhoneNumber());//3
+            data.add(n.getAddress()); //4
+            data.add(n.getEmail());//5 ý dòng xết
+            model.addRow(data);;
         }
         tbl.setModel(model);
     }
@@ -556,5 +590,7 @@ public class KhachHangGUI extends JPanel {
         txtHoKH.setEditable(flag);
         txtSDT.setEditable(flag);
         txtTenKH.setEditable(flag);
+        txtEmail.setEditable(flag);
+        txtAddress.setEditable(flag);
     }
 }
