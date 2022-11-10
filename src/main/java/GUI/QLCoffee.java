@@ -143,9 +143,10 @@ public class QLCoffee extends JFrame implements MouseListener {
         navItem.add("Bán hàng:Shop_20px.png:Shop_20px_active.png");
         navItem.add("Quản lý Sản Phẩm:QLSP_20px.png:QLSP_20px_active.png");
         navItem.add("Quản lý Khách Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
-        navItem.add("Nhà cung cấp:CongCu_20px.png:CongCu_20px_active.png");
         navItem.add("Nhập & Xuất:ThongKe_20px.png:ThongKe_20px_active.png");
+        navItem.add("Loại:CongCu_20px.png:CongCu_20px_active.png");
         navItem.add("Thống kê:ThongKe_20px.png:ThongKe_20px_active.png");
+        
 
         outNav();
 
@@ -203,10 +204,7 @@ public class QLCoffee extends JFrame implements MouseListener {
 
     public void changeMainInfo(int i) throws FileNotFoundException //Đổi Phần hiển thị khi bấm btn trên menu
     {
-       if (flag && i > 4 && i < 8) // Thay đổi nếu Thông kế đang dropdown
-       {
-           i = i + 2;
-       }
+     
        
        //System.out.print(i);
         switch (i) {
@@ -230,68 +228,21 @@ public class QLCoffee extends JFrame implements MouseListener {
                 main.revalidate();
                 break;
 
-            case 3: // QUẢN LÝ NHÂN VIÊN
+            case 3:  // hoa don
                 main.removeAll();
 //                main.add(new NhanVienGUI(DEFALUT_WIDTH));
                 main.repaint();
                 main.revalidate();
                 break;
-
-            case 4: //NHẬP VẦ XUẤT
-                if (flag) {
-                    // Thêm 2 btn vào dưới thống kê
-//                    if (Collections.max() == 5) {
-//                        navItem.add(i, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
-//                        navItem.add(i + 1, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
-//                    } else {
-//                        navItem.add(i + 1, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
-//                        navItem.add(i + 2, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
-//                    }
-                    navItem.add(i + 1, "Hóa Đơn:KhachHang_20px.png:KhachHang_20px_active.png");
-                    navItem.add(i + 2, "Nhập Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
-                    flag = false; // Thông báo là đang Dropdown thống kê
-                } else {
-                    // Xóa 2 btn của thống kê
-//                    if (Collections.max(permissions) == 5) {
-//                        navItem.remove(i);
-//                        navItem.remove(i);
-//                    } else {
-//                        navItem.remove(i + 1);
-//                        navItem.remove(i + 1);
-//                    }
-                    navItem.remove(i + 1);
-                    navItem.remove(i + 1);
-                    flag = true;  // Thông báo là Dropdown thống kê đă ẩn
-                }
-                outNav(); //Load lại phần Navigation
-                break;
-            case 5: // BÁN HÀNG
+         
+         case 4: 
                 main.removeAll();
-//                main.add(new HoaDonGUI(DEFALUT_WIDTH));
+              main.add( new CategoryGUI(DEFALUT_WIDTH));
                 main.repaint();
                 main.revalidate();
                 break;
-            case 6: // NHẬP HÀNG
-                main.removeAll();
-//                main.add(new Page404(DEFALUT_WIDTH, "THỐNG KÊ - NHẬP HÀNG"));
-//                main.add(new NhapHangGUI(DEFALUT_WIDTH));
-                main.repaint();
-                main.revalidate();
-                break;
-         /*   case 7: //NHÀ CUNG CẤP
-                main.removeAll();
-//                main.add(new NhaCungCapGUI(DEFALUT_WIDTH));
-                main.repaint();
-                main.revalidate();
-                break;
-            case 8: //USER
-                main.removeAll();
-//                main.add(new TaiKhoanGUI(DEFALUT_WIDTH));
-                main.repaint();
-                main.revalidate();
-                break;
-*/
-            case 7: // THỐNG KÊ
+          
+            case 5: // THỐNG KÊ
                 main.removeAll();
                 main.add(new ThongKeGUI(DEFALUT_WIDTH));
                 main.repaint();
