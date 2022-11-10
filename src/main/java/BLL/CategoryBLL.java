@@ -9,6 +9,7 @@ import DAL.CategoryDAL;
 import DAL.ProductDAL;
 import hibernate.entities.Category;
 import hibernate.entities.Category;
+import hibernate.entities.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,10 +33,6 @@ public class CategoryBLL {
     public static void setListCategory(List<Category> listCategory) {
         CategoryBLL.listCategory = listCategory;
     }
-    //    public Category getByIdDuty(int id_duty) {
-//        CategoryDAO category = new CategoryDAO();
-//        return category.getByIdDuty(id_duty);
-//    }
 
     public void loadListCategory() {
         if (listCategory== null) {
@@ -43,62 +40,62 @@ public class CategoryBLL {
         }
         listCategory=dal.findAll();
     }
-    public Category searchCourseWithID(int id) {
-        List<Category> search = null;
+    public ArrayList<Category> searchCourseWithID(int id) {
+        ArrayList<Category> search = new ArrayList<>();
         for (Category cs : listCategory) {
             if (cs.getId()==id) {
-              return cs;
+              search.add(cs);
             }
         }
-        return null;
+        return search;
+    }
+    public ArrayList<Category> searchCourseWithName(String name) {
+        ArrayList<Category> search = new ArrayList<>();
+        for (Category cs : listCategory) {
+            if (cs.getName().toLowerCase().contains(name.toLowerCase())) {
+                search.add(cs);
+            }
+        }
+        return search;
     }
     public long getCountCategory(){
         return dal.getCount();
     }
-//
-//    public void show() {
-//        for (Category category : CategoryList) {
-//            System.out.println(category.getName());
-//        }
-//    }
-//
-//    public void add(Category category) {
-//        CategoryList.add(category);
-//        CategoryDAO categoryDAO = new CategoryDAO();
-//        try {
-//            categoryDAO.save(category);
-//        } catch (FileNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-//
-//    public void delete(int id_duty) {
-//        for (Category categoryDTO : CategoryList) {
-//            if (categoryDTO.getId_duty() == id_duty) {
-//                CategoryList.remove(categoryDTO);
-//                CategoryDAO categoryDAO = new CategoryDAO();
-//                try {
-//                    categoryDAO.delete(id_duty);
-//                } catch (FileNotFoundException e) {
-//                    System.out.println(e.getMessage());
-//                }
-//                return;
-//            }
-//        }
-//    }
-//
-//    public void set(Category categoryDTO) {
-//        for (int i = 0; i < CategoryList.size(); i++) {
-//            if (CategoryList.get(i).getId_duty() == categoryDTO.getId_duty()) {
-//                CategoryList.set(i, categoryDTO);
-//                CategoryDAO categoryDAO = new CategoryDAO();
-//                try {
-//                    categoryDAO.update(categoryDTO);
-//                } catch (FileNotFoundException e) {
-//                    System.out.println(e.getMessage());
-//                }
-//                return;
-//            }
-//        }
-//    }
+    public void add(Category category) {
+        try {
+            dal.insertCategory(category);
+           listCategory.add(category);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void delete(String id) {
+
+        int idCate = Integer.parseInt(id);
+        for(int i = 0 ; i < listCategory.size() ; i++){
+            if (listCategory.get(i).getId() == idCate) {
+                try {
+                    dal.deleteCategory(idCate);
+                    listCategory.remove(i);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void update(Category ct) {
+        for (int i = 0; i < listCategory.size(); i++) {
+            if (listCategory.get(i).getId() == ct.getId()) {
+                try {
+                    dal.updateCategory(ct);
+                    listCategory.set(i, ct);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

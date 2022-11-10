@@ -88,7 +88,7 @@ public class CategoryDAL {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            String hql = "DELETE FROM loai WHERE id_Loai = :id";
+            String hql = "DELETE FROM loai WHERE id= :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             result = query.executeUpdate();
