@@ -582,14 +582,14 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             }
             int maHD = Integer.parseInt(txtMaHD.getText().trim());
             int maKH = Integer.parseInt(txtMaKH.getText().trim());
-            int maNV = Integer.parseInt(txtMaNV.getText().trim());
+          //  int maNV = Integer.parseInt(txtMaNV.getText().trim());
             Timestamp stamp = Timestamp.valueOf(txtNgayHD.getText());
             Date ngayHD = new Date(stamp.getTime());
             float tongTien = Float.parseFloat(txtTongTien.getText());
             Customer customer = khBUS.getCustomerById(maKH);
             List<OrderDetail> orderDetail = ctBUS.getCt_hdBLL();
 
-            Order hd = new Order(maHD, tongTien, ngayHD ,maNV, customer, orderDetail);
+            Order hd = new Order(maHD, tongTien, ngayHD ,1, customer, orderDetail);
             hdBUS.insertOrder(hd);
             for (OrderDetail ct : dsct) {
                 ctBUS.add(ct);
