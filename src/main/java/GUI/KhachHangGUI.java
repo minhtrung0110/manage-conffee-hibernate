@@ -389,7 +389,7 @@ public class KhachHangGUI extends JPanel {
                         c.setAddress(diachi);
                         c.setEmail(email);
                         khBLL.update(c);
-                        outModel(model, (ArrayList<Customer>) khBLL.getListCustomer());// Load lại table                        
+                        outModel(model, (ArrayList<Customer>) khBLL.getListCustomer());// Load lại table
                         JOptionPane.showConfirmDialog(null, "Sửa thông tin khách hàng thành công");
 
                     }
@@ -412,12 +412,12 @@ public class KhachHangGUI extends JPanel {
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
-        list(); //Đọc từ database lên table 
+        list(); //Đọc từ database lên table
         /**
          * ************** TẠO TABLE
          * ***********************************************************
          */
-        // Chỉnh width các cột 
+        // Chỉnh width các cột
         tbl.getColumnModel().getColumn(0).setPreferredWidth(40);
         tbl.getColumnModel().getColumn(1).setPreferredWidth(40);
         tbl.getColumnModel().getColumn(2).setPreferredWidth(50);
@@ -469,7 +469,7 @@ public class KhachHangGUI extends JPanel {
         JPanel searchBox = new JPanel(null);
         searchBox.setBackground(null);
         searchBox.setBounds(new Rectangle(50, 120, 530, 30));
-        searchBox.setBorder(createLineBorder(Color.BLACK)); //Chỉnh viền 
+        searchBox.setBorder(createLineBorder(Color.BLACK)); //Chỉnh viền
         //PHẦN CHỌN SEARCH
         JComboBox cmbChoice = new JComboBox();
         cmbChoice.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -502,7 +502,7 @@ public class KhachHangGUI extends JPanel {
             @Override
             public void focusGained(FocusEvent e) {
                 searchIcon.setIcon(new ImageIcon("./src/image/search_25px_focus.png")); //Đổi màu icon
-                searchBox.setBorder(createLineBorder(new Color(52, 152, 219))); // Đổi màu viền 
+                searchBox.setBorder(createLineBorder(new Color(52, 152, 219))); // Đổi màu viền
             }
 
             public void focusLost(FocusEvent e) //Trờ về như cũ

@@ -19,7 +19,7 @@ public class CustomerBLL {
     private CustomerDAL data = new CustomerDAL();
 
     public CustomerBLL() {
-
+        loadData();
     }
 
     public void loadData() {
@@ -112,50 +112,8 @@ public class CustomerBLL {
         return search;
     }
 
-//    public CustomerBLL(int i1) {
-//        list();
-//    }
-//
-//    public Customer getCustomerById(String MaKH) {
-//        for (KhachHangDTO kh : khBUS) {
-//            if (kh.getId_KH() == Integer.parseInt(MaKH)) {
-//                return kh;
-//            }
-//        }
-//        return null;
-//    }
-//
-//    public void list() {
-//        KhachHangDAO hdDAO = new KhachHangDAO();
-//        khBUS = new ArrayList<>();
-//        khBUS = hdDAO.findAll();
-//    }
-//
-//    
-//
-//    
-//
-//    public void set(KhachHangDTO khachHangDTO) {
-//        for (int i = 0; i < khBUS.size(); i++) {
-//            if (khBUS.get(i).getId_KH() == khachHangDTO.getId_KH()) {
-//                khBUS.set(i, khachHangDTO);
-//                KhachHangDAO khDAO = new KhachHangDAO();
-//                try {
-//                    khDAO.update(khachHangDTO);
-//                } catch (FileNotFoundException e) {
-//                    System.out.println(e.getMessage());
-//                }
-//                return;
-//            }
-//        }
-//    }
-//
-//    public boolean check(String makh) {
-//        for (KhachHangDTO kh : khBUS) {
-//            if (String.valueOf(kh.getId_KH()).equals(makh)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public static void main(String[] args) {
+        CustomerBLL bll = new CustomerBLL();
+        bll.getListCustomer().forEach(System.out::println);
+    }
 }

@@ -38,14 +38,7 @@ public class QLCoffee extends JFrame implements MouseListener {
     private int DEFAULT_HEIGHT = 730, DEFALUT_WIDTH = 1300;
     private ArrayList<String> navItem = new ArrayList<>();  //Chứa thông tin có button cho menu gồm
     private ArrayList<navItem> navObj = new ArrayList<>();  //Chứa cái button trên thanh menu
-//    private ArrayList<Integer> permissions = new ArrayList<>();
 
-//    public QLCoffee(String userId, String userName, int id_permission) throws FileNotFoundException {
-//        this.userId = userId;
-//        this.userName = userName;
-//        this.id_permission = id_permission;
-//        view();
-//    }
     public QLCoffee() throws FileNotFoundException, Exception {
         Toolkit screen = Toolkit.getDefaultToolkit();
         view();
@@ -83,22 +76,7 @@ public class QLCoffee extends JFrame implements MouseListener {
 
         header hmain = new header(DEFALUT_WIDTH, 40);
 
-//        if (userName != null) {
-//            JLabel user = new JLabel("Xin chào, " + userName);
-//            user.setFont(font);
-//            user.setForeground(Color.WHITE);
-//            user.setBounds(DEFALUT_WIDTH - 300, -7, 150, 50);
-//            hmain.add(user);
-//
-//            navItem btnLogOut = new navItem("", new Rectangle(DEFALUT_WIDTH - 150, -8, 50, 50), "logout_25px.png", "logout_25px.png", "logout_hover_25px.png", new Color(80, 80, 80));
-//            hmain.add(btnLogOut.isButton());
-//            btnLogOut.addMouseListener(new MouseAdapter() {
-//                public void mouseClicked() {
-////                    Login lg = new Login();
-//                    dispose();
-//                }
-//            });
-//        }
+
         //Tạo btn EXIT & MINIMIZE
         navItem exit = new navItem("", new Rectangle(DEFALUT_WIDTH - 50, -8, 50, 50), "exit_25px.png", "exit_25px.png", "exit_hover_25px.png", new Color(240, 71, 74));
         navItem mini = new navItem("", new Rectangle(DEFALUT_WIDTH - 100, -8, 50, 50), "minimize_25px.png", "minimize_25px.png", "minimize_hover_25px.png", new Color(80, 80, 80));
@@ -129,21 +107,12 @@ public class QLCoffee extends JFrame implements MouseListener {
         scroll.getVerticalScrollBar().setPreferredSize(new Dimension(1, 100));
         scroll.setHorizontalScrollBarPolicy(scroll.HORIZONTAL_SCROLLBAR_NEVER);
 
-//        ct_quyenBUS permisisondetail = new ct_quyenBUS();
-//        permisisondetail.getByIdPermission(id_permission);
-//        permisisondetail.bubbleSort();
-//        List<ct_quyenDTO> detail = permisisondetail.getPermissionList();
-//        for (ct_quyenDTO temp : detail) {
-//            CategoryBUS category = new CategoryBUS();
-//            CategoryDTO cate = category.getByIdDuty(temp.getid_duty());
-//            permissions.add(temp.getid_duty());
-//            navItem.add(cate.toString());
-//        }
+
         navItem = new ArrayList<>();  //Chứa thông tin có button cho menu gồm ( Tên btn : icon : icon hover )
         navItem.add("Bán hàng:Shop_20px.png:Shop_20px_active.png");
         navItem.add("Quản lý Sản Phẩm:QLSP_20px.png:QLSP_20px_active.png");
         navItem.add("Quản lý Khách Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
-        navItem.add("Nhập & Xuất:ThongKe_20px.png:ThongKe_20px_active.png");
+        navItem.add("Hoá Đơn:ThongKe_20px.png:ThongKe_20px_active.png");
         navItem.add("Loại:CongCu_20px.png:CongCu_20px_active.png");
         navItem.add("Thống kê:ThongKe_20px.png:ThongKe_20px_active.png");
         
@@ -180,12 +149,6 @@ public class QLCoffee extends JFrame implements MouseListener {
         }
         if (!flag && navObj.size() > 8) //Đổi màu phần DropDown của thống kê
         {
-//            for (Integer permission : permissions) {
-//                if (permission == 5) {
-//                    navObj.get(permission - 1).setColorNormal(new Color(255, 177, 66));
-//                    navObj.get(permission).setColorNormal(new Color(255, 177, 66));
-//                }
-//            }
             navObj.get(4).setColorNormal(new Color(255, 177, 66));
             navObj.get(5).setColorNormal(new Color(255, 177, 66));
         }
@@ -210,7 +173,7 @@ public class QLCoffee extends JFrame implements MouseListener {
         switch (i) {
             case 0: //  BÁN HÀNG 
                 main.removeAll();
-//             main.add(new BanHangGUI(DEFALUT_WIDTH));
+                main.add(new BanHangGUI(DEFALUT_WIDTH));
                 main.repaint();
                 main.revalidate();
                 break;
@@ -227,7 +190,6 @@ public class QLCoffee extends JFrame implements MouseListener {
                 main.repaint();
                 main.revalidate();
                 break;
-
             case 3:  // hoa don
                 main.removeAll();
 //                main.add(new NhanVienGUI(DEFALUT_WIDTH));
