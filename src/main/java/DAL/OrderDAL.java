@@ -92,8 +92,8 @@ public class OrderDAL {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            String hql = "UPDATE hoadon SET id_KH = :id_KH , id_NV = :id_NV" +
-                    ", total_money  = :total_money, create_day  = :create_day WHERE id = :id";
+            String hql = "UPDATE Order SET customer.id = :id_KH , id_Staff = :id_NV" +
+                    ", totalPrice  = :total_money, createdDate  = :create_day WHERE id = :id";
 
             Query query = session.createQuery(hql);
 
