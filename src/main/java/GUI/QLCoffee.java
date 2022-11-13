@@ -112,7 +112,10 @@ public class QLCoffee extends JFrame implements MouseListener {
         navItem.add("Bán hàng:Shop_20px.png:Shop_20px_active.png");
         navItem.add("Quản lý Sản Phẩm:QLSP_20px.png:QLSP_20px_active.png");
         navItem.add("Quản lý Khách Hàng:KhachHang_20px.png:KhachHang_20px_active.png");
+        navItem.add("Hoá Đơn:ThongKe_20px.png:ThongKe_20px_active.png");
+        navItem.add("Loại:CongCu_20px.png:CongCu_20px_active.png");
         navItem.add("Thống kê:ThongKe_20px.png:ThongKe_20px_active.png");
+        
 
         outNav();
 
@@ -164,10 +167,7 @@ public class QLCoffee extends JFrame implements MouseListener {
 
     public void changeMainInfo(int i) throws FileNotFoundException //Đổi Phần hiển thị khi bấm btn trên menu
     {
-       if (flag && i > 4 && i < 8) // Thay đổi nếu Thông kế đang dropdown
-       {
-           i = i + 2;
-       }
+     
        
        //System.out.print(i);
         switch (i) {
@@ -190,8 +190,21 @@ public class QLCoffee extends JFrame implements MouseListener {
                 main.repaint();
                 main.revalidate();
                 break;
-
-            case 3: // THỐNG KÊ
+            case 3:  // hoa don
+                main.removeAll();
+//                main.add(new NhanVienGUI(DEFALUT_WIDTH));
+                main.repaint();
+                main.revalidate();
+                break;
+         
+         case 4: 
+                main.removeAll();
+              main.add( new CategoryGUI(DEFALUT_WIDTH));
+                main.repaint();
+                main.revalidate();
+                break;
+          
+            case 5: // THỐNG KÊ
                 main.removeAll();
                 main.add(new ThongKeGUI(DEFALUT_WIDTH));
                 main.repaint();

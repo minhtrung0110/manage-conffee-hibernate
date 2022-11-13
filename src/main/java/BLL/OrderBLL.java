@@ -1,21 +1,19 @@
 package BLL;
-
 import DAL.OrderDAL;
 import hibernate.entities.Customer;
 import hibernate.entities.Order;
 import hibernate.entities.OrderDetail;
-import hibernate.entities.Product;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
+
+
 public class OrderBLL {
+    private OrderDAL dal = new OrderDAL();
     private List<Order> hdBLL;
-    private OrderDAL orderDAL = new OrderDAL();
-
-
     public OrderBLL() {
         list();
     }
@@ -26,7 +24,7 @@ public class OrderBLL {
 
     public void list() {
         hdBLL = new ArrayList<>();
-        hdBLL = orderDAL.getAllOrder("DESC");
+        hdBLL = dal.getAllOrder("DESC");
     }
 
 
@@ -41,21 +39,38 @@ public class OrderBLL {
             }
         }
     }
+    public List<Order> getListOrder() {
 
-//    public void set(Order hoaDonDTO) {
-//        for (int i = 0; i < hdBLL.size(); i++) {
-//            if (hdBLL.get(i).getId() == hoaDonDTO.getId()) {
-//                hdBLL.set(i, hoaDonDTO);
-//                OrderDAL hdDAO = new OrderDAL();
-//                hdDAO.updateOrder(hoaDonDTO);
-//                return;
-//            }
-//        }
-//    }
+       try{
+           return dal.getAllOrder("DESC");
+       }
+       catch (Exception e) {
+           e.printStackTrace();
+       }
+       return null;
+    }
 
+    public long getCountOrder() {
+        try {
+            return dal.getCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public long getTotalRevenue(){
+           try {
+               return dal.getTotalRevenue();
+           }
+           catch (Exception e) {
+               e.printStackTrace();
+           }
+           return 0;
+    }
     public Order getOrderById(int id) {
         try {
-            return orderDAL.getOrderById(id);
+            return dal.getOrderById(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +79,7 @@ public class OrderBLL {
 
     public void insertOrder(Order hd) {
         hdBLL.add(hd);
-        orderDAL.insertOrder(hd);
+        dal.insertOrder(hd);
     }
 
     public String remindMaHD() {
@@ -169,7 +184,6 @@ public class OrderBLL {
         }
         return ds;
     }
-
     public static void main(String[] args) {
         Customer customer = new CustomerBLL().getCustomerById(4);
         List<OrderDetail> listOrderDetail = new OrderDetailBLL(1).getCt_hdBLL();
@@ -183,4 +197,5 @@ public class OrderBLL {
 
         bll.insertOrder(order);
     }
+
 }

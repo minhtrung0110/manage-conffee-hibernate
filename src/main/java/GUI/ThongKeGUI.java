@@ -10,45 +10,23 @@ package GUI;
 
 import BLL.LoaiBLL;
 import BLL.SanPhamBLL;
-import BLL.HoaDonBLL;
+import BLL.OrderBLL;
 import hibernate.entities.Order;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import static javax.swing.BorderFactory.createLineBorder;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
+
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 //import static oracle.jrockit.jfr.events.Bits.longValue;
 import org.jfree.chart.ChartFactory;  
 import org.jfree.chart.ChartPanel;  
-import org.jfree.chart.JFreeChart;  
-import org.jfree.chart.plot.PlotOrientation;  
-import org.jfree.data.category.DefaultCategoryDataset;  
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
   
   
 
@@ -61,16 +39,15 @@ public class ThongKeGUI extends JPanel{
     private int DEFAUTL_WIDTH;
     private JLabel lbDateStart,lbDateEnd;
     private JPanel panel;
-    HoaDonBLL HD=new HoaDonBLL();
+    private SanPhamBLL pro_bll=new SanPhamBLL();
+    private LoaiBLL cate_bll=new LoaiBLL();
+    private OrderBLL or_bll=new OrderBLL();
+    private OrderBLL HD=new OrderBLL();
 
     
     public ThongKeGUI(int width) {
         this.DEFAUTL_WIDTH = width;
         init();
-        SanPhamBLL pro_bll=new SanPhamBLL();
-        LoaiBLL cate_bll=new LoaiBLL();
-        HoaDonBLL or_bll=new HoaDonBLL();
-        
         text_loai.setText(String.valueOf(cate_bll.getCountCategory()));
         text_sanpham.setText(String.valueOf(pro_bll.getCountProduct()));
         text_donhang.setText(String.valueOf(or_bll.getCountOrder()));
