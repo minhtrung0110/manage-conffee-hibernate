@@ -5,64 +5,35 @@
  */
 package GUI;
 
-//import BUS.HoaDonBUS;
-//import BUS.ct_HDBUS;
-//import BUS.KhachHangBUS;
-//import BUS.NhanVienBUS;
-//import BUS.SanPhamBUS;
-//import DAO.SanPhamDAO;
-//import DTO.HoaDonDTO;
-//import DTO.SanPhamDTO;
-//import DTO.ct_HoaDonDTO;
-//import GUI.model.Page404;
-//import com.kingaspx.toast.util.Toast;
 
+import BLL.CustomerBLL;
 import BLL.OrderBLL;
 import BLL.OrderDetailBLL;
-import BLL.CustomerBLL;
 import BLL.SanPhamBLL;
-import DAL.ProductDAL;
+import GUI.model.Page404;
 import hibernate.entities.Customer;
 import hibernate.entities.Order;
-import hibernate.entities.Product;
 import hibernate.entities.OrderDetail;
-import GUI.model.Page404;
+import hibernate.entities.Product;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Rectangle;
-import java.awt.Image;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.FileNotFoundException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
- *
  * @author ACER
  */
 public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
@@ -76,6 +47,8 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
     private CustomerBLL khBUS = new CustomerBLL();
     private OrderDetailBLL ctBUS = new OrderDetailBLL(1);
     private ArrayList<OrderDetail> dsct = new ArrayList<>();
+
+    int idKey = (int) (ctBUS.getCountOrderDetail() +1);
 
     //variable of JPanel
     private JTextField txtMaHD;
@@ -164,12 +137,12 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         lbMaNV.setFont(font0);
         lbMaNV.setBounds(415, 0, 60, 30);
         txtMaNV = new JTextField();
-        txtMaNV.setText(String.valueOf(userID));
+        txtMaNV.setText(String.valueOf(1));
         txtMaNV.setHorizontalAlignment(JTextField.CENTER);
         txtMaNV.setFont(font0);
         txtMaNV.setBounds(new Rectangle(475, 0, 100, 30));
         txtMaNV.setEditable(false);
-        txtMaNV.setText(userID);
+        txtMaNV.setText("1");
         txtMaNV.addKeyListener(this);
         hdView.add(lbMaNV);
         hdView.add(txtMaNV);
@@ -398,7 +371,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
         model.setRowCount(0);
         for (OrderDetail sp : ds) {
             data = new Vector();
-            data.add(sp.getId());
+            data.add(sp.getProduct().getId());
             data.add(sp.getName());
             data.add(sp.getPrice());
             data.add(sp.getAmount());
@@ -503,8 +476,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             //Kiểm tra đã có trong giỏ chưa
             boolean flag = true;
             for (OrderDetail sp : dsct) {
-//                System.out.println(sp.getId_SP() + " " + txtMaSP.getText());
-                if (Integer.parseInt(txtMaSP.getText()) == (sp.getId())) {
+                if (Integer.parseInt(txtMaSP.getText()) == (sp.getProduct().getId())) {
                     sp.setAmount(sp.getAmount() + Integer.parseInt(txtCTSL.getText()));
 
                     flag = false;
@@ -522,8 +494,14 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
 
                 Product product = new SanPhamBLL().getProductById(Integer.parseInt(txtMaSP.getText()));
 
-//                dsct.add(new OrderDetail(Integer.parseInt(txtMaHD.getText()), Integer.parseInt(txtMaSP.getText()), txtCTTenSP.getText(), sl, gia));
-                dsct.add(new OrderDetail(Integer.parseInt(txtMaHD.getText()), order, product, txtCTTenSP.getText(), sl, gia));
+
+                dsct.add(new OrderDetail(idKey, order, product, txtCTTenSP.getText(), sl, gia));
+                idKey++;
+
+//                for (OrderDetail od : dsct) {
+//                    System.out.println(od);
+//                }
+
 
                 txtMaSP.setText(null);
                 txtCTSL.setText(null);
@@ -550,17 +528,12 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             }
 
             if (txtMaKH.getText().isEmpty()) {
-//                new Toast.ToastWarning("Vui lòng chọn mã khách hàng", Toast.SHORT_DELAY);
-//                txtMaKH.requestFocus();
-//                return;
-                  txtMaKH.setText("1");
+                txtMaKH.setText("1");
             }
 
-//            if (txtMaNV.getText().isEmpty()) {
-//                JOptionPane.showMessageDialog(null, "Vui lòng chọn mã nhân viên", "Thông báo", 0);
-//                txtMaNV.requestFocus();
-//                return;
-//            }
+            if (txtMaNV.getText().isEmpty()) {
+                txtMaNV.setText("1");
+            }
 
             txtNgayHD.setText(date.toString());
             reset(false);
@@ -568,7 +541,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             txtMaSP.requestFocus();
         }
 
-        if (e.getSource().equals(btnDeleteHD)) //Xóa HD
+        if (e.getSource().equals(btnDeleteHD)) //Hủy HD
         {
             flag = true;
             reset(true);
@@ -582,16 +555,17 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             }
             int maHD = Integer.parseInt(txtMaHD.getText().trim());
             int maKH = Integer.parseInt(txtMaKH.getText().trim());
-          //  int maNV = Integer.parseInt(txtMaNV.getText().trim());
+            int maNV = Integer.parseInt(txtMaNV.getText().trim());
             Timestamp stamp = Timestamp.valueOf(txtNgayHD.getText());
             Date ngayHD = new Date(stamp.getTime());
             float tongTien = Float.parseFloat(txtTongTien.getText());
             Customer customer = khBUS.getCustomerById(maKH);
             List<OrderDetail> orderDetail = ctBUS.getCt_hdBLL();
 
-            Order hd = new Order(maHD, tongTien, ngayHD ,1, customer, orderDetail);
+            Order hd = new Order(maHD, tongTien, ngayHD, maNV, customer, orderDetail);
             hdBUS.insertOrder(hd);
             for (OrderDetail ct : dsct) {
+                System.out.println(ct);
                 ctBUS.add(ct);
             }
             JOptionPane.showMessageDialog(null, "Thêm hóa đơn thành công !!!", "Thành công", JOptionPane.INFORMATION_MESSAGE);

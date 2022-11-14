@@ -42,7 +42,6 @@ public class QLCoffee extends JFrame implements MouseListener {
     public QLCoffee() throws FileNotFoundException, Exception {
         Toolkit screen = Toolkit.getDefaultToolkit();
         view();
-        System.out.println("heheh");
     }
 
     public static void main(String[] args) {
@@ -192,7 +191,7 @@ public class QLCoffee extends JFrame implements MouseListener {
                 break;
             case 3:  // hoa don
                 main.removeAll();
-//                main.add(new NhanVienGUI(DEFALUT_WIDTH));
+                main.add(new HoaDonGUI(DEFALUT_WIDTH));
                 main.repaint();
                 main.revalidate();
                 break;

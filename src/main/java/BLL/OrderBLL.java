@@ -185,9 +185,9 @@ public class OrderBLL {
         return ds;
     }
     public static void main(String[] args) {
-        Customer customer = new CustomerBLL().getCustomerById(4);
-        List<OrderDetail> listOrderDetail = new OrderDetailBLL(1).getCt_hdBLL();
-        Order order = new Order(4, 200f, new Date(), 1, customer, listOrderDetail);
+//        Customer customer = new CustomerBLL().getCustomerById(4);
+//        List<OrderDetail> listOrderDetail = new OrderDetailBLL(1).getCt_hdBLL();
+//        Order order = new Order(4, 200f, new Date(), 1, customer, listOrderDetail);
 
         OrderBLL bll = new OrderBLL();
 //        bll.list();
@@ -195,7 +195,10 @@ public class OrderBLL {
 
 //        System.out.println(bll.getOrderById(1));
 
-        bll.insertOrder(order);
+//        bll.insertOrder(order);
+
+
+        System.out.println("MAHD: " + Integer.parseInt(bll.remindMaHD()));
     }
 
 }
