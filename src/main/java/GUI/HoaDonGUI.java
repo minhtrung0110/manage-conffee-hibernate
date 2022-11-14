@@ -417,31 +417,31 @@ public class HoaDonGUI extends JPanel {
         JLabel btnSearch = new JLabel(new ImageIcon("./src/image/btnSearch_45px.png"));
         btnSearch.setBounds(new Rectangle(840, 20, 63, 63));
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
-//        btnSearch.addMouseListener(new MouseAdapter() {
-//            public void mouseClicked(MouseEvent e) {
-//                txtTongTien.requestFocus();
-//                search();
-//            }
-//        });
+        btnSearch.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                txtTongTien.requestFocus();
+                search();
+            }
+        });
         sort.add(btnSearch);
 
         add(sort);
     }
 
-//    public void search() {
-//        int maHD = txtMaHDSearch.getText().equals("") ? 0 : Integer.parseInt(txtMaHDSearch.getText());
-//        int mm = monthChoice.getSelectedIndex() - 1;
-//        int yyyy;
-//        try {
-//            yyyy = Integer.parseInt(yearChoice.getSelectedItem());
-//        } catch (NumberFormatException ex) {
-//            yyyy = 0;
-//        }
-//        double max = txtMaxPrice.getText().equals("") ? 99999999 : Double.parseDouble(txtMaxPrice.getText());
-//        double min = txtMinPrice.getText().equals("") ? 0 : Double.parseDouble(txtMinPrice.getText());
-//
-//        outModel(model, orderBLL.search(mm, yyyy, max, min, maHD));
-//    }
+    public void search() {
+        int maHD = txtMaHDSearch.getText().equals("") ? 0 : Integer.parseInt(txtMaHDSearch.getText());
+        int mm = monthChoice.getSelectedIndex() - 1;
+        int yyyy;
+        try {
+            yyyy = Integer.parseInt(yearChoice.getSelectedItem());
+        } catch (NumberFormatException ex) {
+            yyyy = 0;
+        }
+        double max = txtMaxPrice.getText().equals("") ? 99999999 : Double.parseDouble(txtMaxPrice.getText());
+        double min = txtMinPrice.getText().equals("") ? 0 : Double.parseDouble(txtMinPrice.getText());
+
+        outModel(model, orderBLL.search(mm, yyyy, max, min, maHD));
+    }
 
     public void cleanView() {
         txtMaHD.setText("");

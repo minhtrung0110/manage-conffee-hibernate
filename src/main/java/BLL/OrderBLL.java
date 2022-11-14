@@ -4,7 +4,9 @@ import DAL.OrderDAL;
 import hibernate.entities.Order;
 
 import java.io.FileNotFoundException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class OrderBLL {
@@ -101,44 +103,44 @@ public class OrderBLL {
 //        return list;
 //    }
 //
-//    public ArrayList<HoaDonDTO> search(int mm, int yyyy, double max, double min, int mahd) {
-//        int mm1 = 0, mm2 = 12;
-//        int yyy1 = 0, yyy2 = Calendar.getInstance().get(Calendar.YEAR);
-//
-//        if (mm != -1) {
-//            mm1 = mm;
-//            mm2 = mm;
-//        }
-//        if (yyyy != 0) {
-//            yyy1 = yyyy;
-//            yyy2 = yyyy;
-//        }
-//
-//        ArrayList<HoaDonDTO> search = new ArrayList<>();
-//        for (HoaDonDTO hd : hdBUS) {
-//            Timestamp time = hd.getCreate_day();
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTimeInMillis(time.getTime());;
-//
-//            int month = calendar.get(Calendar.MONTH);
-//            int year = calendar.get(Calendar.YEAR);
-//
-//            if (hd.getTotal_money() >= min && hd.getTotal_money() <= max
-//                    && (month >= mm1 && month <= mm2)
-//                    && (year >= yyy1 && year <= yyy2)) {
-//                if (mahd != 0 && hd.getId() == mahd) {
-//                    search.clear();
-//                    search.add(hd);
-//                    break;
-//                }
-//                if (mahd != 0 && hd.getId() != mahd) {
-//                    search.clear();
-//                }
-//                search.add(hd);
-//            }
-//        }
-//        return search;
-//    }
+    public ArrayList<Order> search(int mm, int yyyy, double max, double min, int mahd) {
+        int mm1 = 0, mm2 = 12;
+        int yyy1 = 0, yyy2 = Calendar.getInstance().get(Calendar.YEAR);
+
+        if (mm != -1) {
+            mm1 = mm;
+            mm2 = mm;
+        }
+        if (yyyy != 0) {
+            yyy1 = yyyy;
+            yyy2 = yyyy;
+        }
+
+        ArrayList<Order> search = new ArrayList<>();
+        for (Order hd : hdBLL) {
+            Timestamp time = hd.getCreate_day();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(time.getTime());;
+
+            int month = calendar.get(Calendar.MONTH);
+            int year = calendar.get(Calendar.YEAR);
+
+            if (hd.getTotal_money() >= min && hd.getTotal_money() <= max
+                    && (month >= mm1 && month <= mm2)
+                    && (year >= yyy1 && year <= yyy2)) {
+                if (mahd != 0 && hd.getId() == mahd) {
+                    search.clear();
+                    search.add(hd);
+                    break;
+                }
+                if (mahd != 0 && hd.getId() != mahd) {
+                    search.clear();
+                }
+                search.add(hd);
+            }
+        }
+        return search;
+    }
 //
 //    public ArrayList<HoaDonDTO> getListWidthArray(ArrayList<String> s) {
 //        ArrayList<HoaDonDTO> ds = new ArrayList<>();

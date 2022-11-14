@@ -3,6 +3,7 @@ package hibernate.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
 
@@ -36,5 +37,11 @@ public class Order {
     }
 
 
+    public Timestamp getCreate_day() {
+        return (Timestamp) createdDate;
+    }
 
+    public double getTotal_money() {
+        return totalPrice;
+    }
 }
