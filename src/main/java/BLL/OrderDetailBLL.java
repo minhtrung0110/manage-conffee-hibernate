@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDetailBLL {
+
     private OrderDetailDAL orderDetailDAL = new OrderDetailDAL();
     private List<OrderDetail> orderDetailsBLL;
 
@@ -24,18 +25,16 @@ public class OrderDetailBLL {
         return orderDetailsBLL;
     }
 
-
     public void listOrderDetail(int orderID) {
         orderDetailsBLL = new ArrayList<>();
         orderDetailsBLL = orderDetailDAL.getAllOrderDetail(orderID);
     }
 
     public void insertOrderDetail(OrderDetail cthdDTO) {
-        try{
+        try {
             orderDetailDAL.insertOrderdetail(cthdDTO);
             orderDetailsBLL.add(cthdDTO);
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -62,41 +61,10 @@ public class OrderDetailBLL {
         return 0;
     }
 
-//    public void deleteMaSP(String id) {
-//        int idSP = Integer.parseInt(id);
-//        for (ct_HoaDonDTO cthdDTO : ct_hdBUS) {
-//            if (cthdDTO.getId_SP() == idSP) {
-//                ct_hdBUS.remove(cthdDTO);
-//                ct_HDDAO cthdDAO = new ct_HDDAO();
-//                try {
-//                    cthdDAO.deleteByCodeProduct(idSP);
-//                } catch (FileNotFoundException e) {
-//                    System.out.println(e.getMessage());
-//                }
-//                return;
-//            }
-//        }
-//    }
-
-//    public void set(ct_HoaDonDTO cthdDTO) {
-//        for (int i = 0; i < ct_hdBUS.size(); i++) {
-//            if (ct_hdBUS.get(i).getId_HD() == cthdDTO.getId_HD()) {
-//                ct_hdBUS.set(i, cthdDTO);
-//                ct_HDDAO cthdDAO = new ct_HDDAO();
-//                try {
-//                    cthdDAO.update(cthdDTO);
-//                } catch (FileNotFoundException e) {
-//                    System.out.println(e.getMessage());
-//                }
-//                return;
-//            }
-//        }
-//    }
-
     public static void main(String[] args) {
         OrderBLL odbll = new OrderBLL();
 //        Order order = odbll.getOrderById(6);
-Order order = new Order();
+        Order order = new Order();
 
         SanPhamBLL spbll = new SanPhamBLL();
         Product product = spbll.getProductById(2);
@@ -105,7 +73,7 @@ Order order = new Order();
         OrderDetailBLL bll = new OrderDetailBLL(1);
         System.out.println(bll.getCountOrderDetail());
 
-        int idKey = (int) (bll.getCountOrderDetail() +1);
+        int idKey = (int) (bll.getCountOrderDetail() + 1);
         OrderDetail orderDetail = new OrderDetail(2, order, product, product.getName(), 2, 343400);
         idKey++;
         OrderDetail orderDetail2 = new OrderDetail(3, order, product2, product2.getName(), 3, 76700);
