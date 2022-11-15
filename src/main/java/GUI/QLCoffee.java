@@ -1,6 +1,5 @@
 package GUI;
 
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,9 +26,6 @@ import javax.swing.JScrollPane;
 
 public class QLCoffee extends JFrame implements MouseListener {
 
-//    private String userId;
-//    private String userName;
-//    private int id_permission;
     private boolean flag = true;
     private JPanel header, nav, main;
     private int DEFAULT_HEIGHT = 730, DEFALUT_WIDTH = 1300;
@@ -72,7 +68,6 @@ public class QLCoffee extends JFrame implements MouseListener {
 
         header hmain = new header(DEFALUT_WIDTH, 40);
 
-
         //Tạo btn EXIT & MINIMIZE
         navItem exit = new navItem("", new Rectangle(DEFALUT_WIDTH - 50, -8, 50, 50), "exit_25px.png", "exit_25px.png", "exit_hover_25px.png", new Color(240, 71, 74));
         navItem mini = new navItem("", new Rectangle(DEFALUT_WIDTH - 100, -8, 50, 50), "minimize_25px.png", "minimize_25px.png", "minimize_hover_25px.png", new Color(80, 80, 80));
@@ -103,7 +98,6 @@ public class QLCoffee extends JFrame implements MouseListener {
         scroll.getVerticalScrollBar().setPreferredSize(new Dimension(1, 100));
         scroll.setHorizontalScrollBarPolicy(scroll.HORIZONTAL_SCROLLBAR_NEVER);
 
-
         navItem = new ArrayList<>();  //Chứa thông tin có button cho menu gồm ( Tên btn : icon : icon hover )
         navItem.add("Bán hàng:Shop_20px.png:Shop_20px_active.png");
         navItem.add("Quản lý Sản Phẩm:QLSP_20px.png:QLSP_20px_active.png");
@@ -111,7 +105,6 @@ public class QLCoffee extends JFrame implements MouseListener {
         navItem.add("Hoá Đơn:ThongKe_20px.png:ThongKe_20px_active.png");
         navItem.add("Loại:CongCu_20px.png:CongCu_20px_active.png");
         navItem.add("Thống kê:ThongKe_20px.png:ThongKe_20px_active.png");
-        
 
         outNav();
 
@@ -163,9 +156,8 @@ public class QLCoffee extends JFrame implements MouseListener {
 
     public void changeMainInfo(int i) throws FileNotFoundException //Đổi Phần hiển thị khi bấm btn trên menu
     {
-     
-       
-       //System.out.print(i);
+
+        //System.out.print(i);
         switch (i) {
             case 0: //  BÁN HÀNG 
                 main.removeAll();
@@ -192,14 +184,14 @@ public class QLCoffee extends JFrame implements MouseListener {
                 main.repaint();
                 main.revalidate();
                 break;
-         
-         case 4: 
+
+            case 4:
                 main.removeAll();
-              main.add( new CategoryGUI(DEFALUT_WIDTH));
+                main.add(new CategoryGUI(DEFALUT_WIDTH));
                 main.repaint();
                 main.revalidate();
                 break;
-          
+
             case 5: // THỐNG KÊ
                 main.removeAll();
                 main.add(new ThongKeGUI(DEFALUT_WIDTH));
