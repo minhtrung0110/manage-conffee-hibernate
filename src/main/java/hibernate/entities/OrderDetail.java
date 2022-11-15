@@ -18,7 +18,7 @@ public class OrderDetail {
     private int id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_HD",nullable = false,foreignKey = @ForeignKey(name = "chitiethoadon_ibfk_1"))
+    @JoinColumn(name = "id_HD",nullable = true,foreignKey = @ForeignKey(name = "chitiethoadon_ibfk_1"))
     private Order order;
 
     @ManyToOne(fetch = FetchType.EAGER)

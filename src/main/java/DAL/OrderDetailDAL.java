@@ -11,7 +11,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import javax.persistence.Query;
+//import javax.persistence.Query;
+import org.hibernate.query.Query;
 import java.util.List;
 
 public class OrderDetailDAL {
@@ -69,39 +70,25 @@ public class OrderDetailDAL {
         }
         return result;
     }
-//    public int updateProduct(Product product){
-//        System.out.println("A - "+product);
-//        Session session = factory.openSession();
-//        int result = 0;
-//        Transaction tx = null;
-//        try {
-//            tx = session.beginTransaction();
-//            String hql = "UPDATE Product set category=:category, name = :name, description = :description," +
-//                    " price = :price, amount=:amount,image=:image WHERE id = :id";
-//
-//            Query query = session.createQuery(hql);
-//
-//            query.setParameter("name", product.getName());
-//            query.setParameter("id", product.getId());
-//            query.setParameter("category", product.getCategory());
-//            query.setParameter("description", product.getDescription());
-//            query.setParameter("price", product.getPrice());
-//            query.setParameter("amount", product.getAmount());
-//            query.setParameter("image", product.getImage());
-//            System.out.println(hql);
-//            result = query.executeUpdate();
-//            System.out.println("Rows affected: " + result);
-//            // session.update(product);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null) tx.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//
-//        return result;
-//    }
+
+    public long getCount(){
+        Session session = factory.openSession();
+        long amount = 0;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createQuery("select count(*) from OrderDetail");
+            amount = (long)query.uniqueResult();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return amount;
+    }
+
     public int deleteOrderDetail(int id){
         Session session = factory.openSession();
         int result = 0;
