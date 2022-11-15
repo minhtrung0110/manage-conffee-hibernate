@@ -116,9 +116,27 @@ public class OrderDAL {
         return result;
     }
 
-    public int insertOrder(Order order){
+//    public int insertOrder(Order order){
+//        Session session = factory.openSession();
+//        int result = 1;
+//        Transaction tx = null;
+//        try {
+//            tx = session.beginTransaction();
+//            session.save(order);
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            if (tx != null) tx.rollback();
+//
+//            e.printStackTrace();
+//            return 0;
+//        } finally {
+//            session.close();
+//        }
+//        return result;
+//    }
+    public Order insertOrder(Order order){
         Session session = factory.openSession();
-        int result = 1;
+       Order result=order;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -128,7 +146,7 @@ public class OrderDAL {
             if (tx != null) tx.rollback();
 
             e.printStackTrace();
-            return 0;
+            return null;
         } finally {
             session.close();
         }

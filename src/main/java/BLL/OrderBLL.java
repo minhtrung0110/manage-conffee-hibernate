@@ -1,8 +1,7 @@
 package BLL;
 import DAL.OrderDAL;
-import hibernate.entities.Customer;
-import hibernate.entities.Order;
-import hibernate.entities.OrderDetail;
+import hibernate.entities.*;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -77,9 +76,10 @@ public class OrderBLL {
         return null;
     }
 
-    public void insertOrder(Order hd) {
+    public Order insertOrder(Order hd) {
         hdBLL.add(hd);
-        dal.insertOrder(hd);
+       Order order= dal.insertOrder(hd);
+       return order;
     }
 
     public String remindMaHD() {
@@ -186,16 +186,26 @@ public class OrderBLL {
     }
     public static void main(String[] args) {
         Customer customer = new CustomerBLL().getCustomerById(4);
-        List<OrderDetail> listOrderDetail = new OrderDetailBLL(1).getCt_hdBLL();
+        List<OrderDetail> listOrderDetail=new ArrayList<>();
+        OrderDetail orderDetail1= new OrderDetail();
+        orderDetail1.setId(15);
+
+        orderDetail1.setAmount(1);
+        orderDetail1.setName("A");
+        orderDetail1.setProduct(new Product(30,new Category(1,"Loan"), "An Ngu", "Ngon",1,259000, "A.img"));
+        listOrderDetail.add(orderDetail1);
+        listOrderDetail.forEach(s-> System.out.println(s));
         Order order = new Order(4, 200f, new Date(), 1, customer, listOrderDetail);
 
         OrderBLL bll = new OrderBLL();
-//        bll.list();
-//        bll.getOrderBLL().forEach(System.out::println);
 
-//        System.out.println(bll.getOrderById(1));
+       // OrderDetailBLL=new OrderDetailBLL();
+        Order orderRe=bll.insertOrder(order);
+        System.out.println( orderRe);
+        orderDetail1.setOrder(orderRe);
+        OrderDetailBLL bllD = new OrderDetailBLL(1);
+        bllD.add(orderDetail1);
 
-        bll.insertOrder(order);
     }
 
 }
