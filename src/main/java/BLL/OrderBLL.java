@@ -78,8 +78,8 @@ public class OrderBLL {
     }
 
     public void insertOrder(Order hd) {
-        hdBLL.add(hd);
         dal.insertOrder(hd);
+        hdBLL.add(hd);     
     }
 
     public String remindMaHD() {
@@ -184,21 +184,18 @@ public class OrderBLL {
         }
         return ds;
     }
+    
+        
     public static void main(String[] args) {
 //        Customer customer = new CustomerBLL().getCustomerById(4);
 //        List<OrderDetail> listOrderDetail = new OrderDetailBLL(1).getCt_hdBLL();
 //        Order order = new Order(4, 200f, new Date(), 1, customer, listOrderDetail);
 
         OrderBLL bll = new OrderBLL();
-//        bll.list();
-//        bll.getOrderBLL().forEach(System.out::println);
-
-//        System.out.println(bll.getOrderById(1));
-
-//        bll.insertOrder(order);
+        OrderDetail orderDetail=new OrderDetail();
 
 
-        System.out.println("MAHD: " + Integer.parseInt(bll.remindMaHD()));
+       
     }
 
 }

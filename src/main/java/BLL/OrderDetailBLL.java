@@ -30,10 +30,14 @@ public class OrderDetailBLL {
         orderDetailsBLL = orderDetailDAL.getAllOrderDetail(orderID);
     }
 
-    public void add(OrderDetail cthdDTO) {
-        orderDetailsBLL.add(cthdDTO);
-        OrderDetailDAL cthdDAO = new OrderDetailDAL();
-        cthdDAO.insertOrderdetail(cthdDTO);
+    public void insertOrderDetail(OrderDetail cthdDTO) {
+        try{
+            orderDetailDAL.insertOrderdetail(cthdDTO);
+            orderDetailsBLL.add(cthdDTO);
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     public void delete(String id) {
@@ -91,19 +95,20 @@ public class OrderDetailBLL {
 
     public static void main(String[] args) {
         OrderBLL odbll = new OrderBLL();
-        Order order = odbll.getOrderById(6);
+//        Order order = odbll.getOrderById(6);
+Order order = new Order();
 
         SanPhamBLL spbll = new SanPhamBLL();
-        Product product = spbll.getProductById(7);
-        Product product2 = spbll.getProductById(8);
+        Product product = spbll.getProductById(2);
+        Product product2 = spbll.getProductById(5);
 
         OrderDetailBLL bll = new OrderDetailBLL(1);
         System.out.println(bll.getCountOrderDetail());
 
         int idKey = (int) (bll.getCountOrderDetail() +1);
-        OrderDetail orderDetail = new OrderDetail(idKey, order, product, product.getName(), 2, 343400);
+        OrderDetail orderDetail = new OrderDetail(2, order, product, product.getName(), 2, 343400);
         idKey++;
-        OrderDetail orderDetail2 = new OrderDetail(idKey, order, product2, product.getName(), 3, 76700);
+        OrderDetail orderDetail2 = new OrderDetail(3, order, product2, product2.getName(), 3, 76700);
 
         ArrayList<OrderDetail> dsct = new ArrayList<>();
 
@@ -111,7 +116,7 @@ public class OrderDetailBLL {
         dsct.add(orderDetail2);
         for (OrderDetail od : dsct) {
             System.out.println(od);
-            bll.add(od);
+            bll.insertOrderDetail(od);
         }
 
     }

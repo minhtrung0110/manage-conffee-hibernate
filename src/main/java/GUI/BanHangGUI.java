@@ -5,7 +5,6 @@
  */
 package GUI;
 
-
 import BLL.CustomerBLL;
 import BLL.OrderBLL;
 import BLL.OrderDetailBLL;
@@ -48,7 +47,7 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
     private OrderDetailBLL ctBUS = new OrderDetailBLL(1);
     private ArrayList<OrderDetail> dsct = new ArrayList<>();
 
-    int idKey = (int) (ctBUS.getCountOrderDetail() +1);
+    int idKey = (int) (ctBUS.getCountOrderDetail() + 1);
 
     //variable of JPanel
     private JTextField txtMaHD;
@@ -490,10 +489,9 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             }
             outModel(model, dsct);
             if (flag) {
+
                 Order order = new OrderBLL().getOrderById(Integer.parseInt(txtMaHD.getText()));
-
                 Product product = new SanPhamBLL().getProductById(Integer.parseInt(txtMaSP.getText()));
-
 
                 dsct.add(new OrderDetail(idKey, order, product, txtCTTenSP.getText(), sl, gia));
                 idKey++;
@@ -501,8 +499,6 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
 //                for (OrderDetail od : dsct) {
 //                    System.out.println(od);
 //                }
-
-
                 txtMaSP.setText(null);
                 txtCTSL.setText(null);
                 txtCTTenSP.setText(null);
@@ -539,6 +535,19 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
             reset(false);
             flag = false;
             txtMaSP.requestFocus();
+
+//          ----------  Khởi tạo hóa đơn  -----------
+            int maHD = Integer.parseInt(txtMaHD.getText().trim());
+            int maKH = Integer.parseInt(txtMaKH.getText().trim());
+            int maNV = Integer.parseInt(txtMaNV.getText().trim());
+            Timestamp stamp = Timestamp.valueOf(txtNgayHD.getText());
+            Date ngayHD = new Date(stamp.getTime());
+            float tongTien = Float.parseFloat(txtTongTien.getText());
+            Customer customer = khBUS.getCustomerById(maKH);
+            List<OrderDetail> orderDetail = ctBUS.getCt_hdBLL();
+
+            Order hd = new Order(maHD, tongTien, ngayHD, maNV, customer, orderDetail);
+            hdBUS.insertOrder(hd);
         }
 
         if (e.getSource().equals(btnDeleteHD)) //Hủy HD
@@ -553,20 +562,21 @@ public class BanHangGUI extends JPanel implements ActionListener, KeyListener {
                 JOptionPane.showMessageDialog(null, "Vui lòng chọn mã sản phẩm", "Thông báo", 0);
                 return;
             }
-            int maHD = Integer.parseInt(txtMaHD.getText().trim());
-            int maKH = Integer.parseInt(txtMaKH.getText().trim());
-            int maNV = Integer.parseInt(txtMaNV.getText().trim());
-            Timestamp stamp = Timestamp.valueOf(txtNgayHD.getText());
-            Date ngayHD = new Date(stamp.getTime());
-            float tongTien = Float.parseFloat(txtTongTien.getText());
-            Customer customer = khBUS.getCustomerById(maKH);
-            List<OrderDetail> orderDetail = ctBUS.getCt_hdBLL();
-
-            Order hd = new Order(maHD, tongTien, ngayHD, maNV, customer, orderDetail);
-            hdBUS.insertOrder(hd);
+//            int maHD = Integer.parseInt(txtMaHD.getText().trim());
+//            int maKH = Integer.parseInt(txtMaKH.getText().trim());
+//            int maNV = Integer.parseInt(txtMaNV.getText().trim());
+//            Timestamp stamp = Timestamp.valueOf(txtNgayHD.getText());
+//            Date ngayHD = new Date(stamp.getTime());
+//            float tongTien = Float.parseFloat(txtTongTien.getText());
+//            Customer customer = khBUS.getCustomerById(maKH);
+//            List<OrderDetail> orderDetail = ctBUS.getCt_hdBLL();
+//
+//            Order hd = new Order(maHD, tongTien, ngayHD, maNV, customer, orderDetail);
+//            
+//            hdBUS.insertOrder(hd);
             for (OrderDetail ct : dsct) {
                 System.out.println(ct);
-                ctBUS.add(ct);
+                ctBUS.insertOrderDetail(ct);
             }
             JOptionPane.showMessageDialog(null, "Thêm hóa đơn thành công !!!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             flag = true;

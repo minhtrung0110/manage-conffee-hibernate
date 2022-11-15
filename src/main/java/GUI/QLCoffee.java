@@ -1,9 +1,6 @@
 package GUI;
 
-//import BUS.CategoryBUS;
-//import BUS.ct_quyenBUS;
-//import DTO.CategoryDTO;
-//import DTO.ct_quyenDTO;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
