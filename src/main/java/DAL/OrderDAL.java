@@ -116,27 +116,9 @@ public class OrderDAL {
         return result;
     }
 
-//    public int insertOrder(Order order){
-//        Session session = factory.openSession();
-//        int result = 1;
-//        Transaction tx = null;
-//        try {
-//            tx = session.beginTransaction();
-//            session.save(order);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null) tx.rollback();
-//
-//            e.printStackTrace();
-//            return 0;
-//        } finally {
-//            session.close();
-//        }
-//        return result;
-//    }
-    public Order insertOrder(Order order){
+    public int insertOrder(Order order){
         Session session = factory.openSession();
-       Order result=order;
+        int result = 1;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -146,12 +128,31 @@ public class OrderDAL {
             if (tx != null) tx.rollback();
 
             e.printStackTrace();
-            return null;
+            return 0;
         } finally {
             session.close();
         }
         return result;
     }
+//    public Order insertOrder(Order order){
+//        Session session = factory.openSession();
+//        Order result=null;
+//        Transaction tx = null;
+//        try {
+//            tx = session.beginTransaction();
+//            session.save(order);
+//            tx.commit();
+//             result=order;
+//        } catch (HibernateException e) {
+//            if (tx != null) tx.rollback();
+//
+//            e.printStackTrace();
+//            return null;
+//        } finally {
+//            session.close();
+//        }
+//        return result;
+//    }
 
     public long getCount(){
         Session session = factory.openSession();
