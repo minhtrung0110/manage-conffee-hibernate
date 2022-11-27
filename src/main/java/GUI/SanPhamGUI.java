@@ -8,7 +8,7 @@ package GUI;
 import BLL.CategoryBLL;
 import BLL.RandomCode;
 //import BUS.LoaiBUS;
-import BLL.SanPhamBLL;
+import BLL.ProductBLL;
 //import DTO.Category;
 //import DTO.Product;
 import hibernate.entities.Category;
@@ -34,6 +34,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+
 import static javax.swing.BorderFactory.createLineBorder;
 
 import javax.swing.ImageIcon;
@@ -57,14 +58,13 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
- *
  * @author ACER
  */
 public class SanPhamGUI extends JPanel implements KeyListener {
 
-    private SanPhamBLL spBUS = new SanPhamBLL();
-    private CategoryBLL cateBLL=new CategoryBLL();
-   private JTable tbl;
+    private ProductBLL prBLL = new ProductBLL();
+    private CategoryBLL cateBLL = new CategoryBLL();
+    private JTable tbl;
     private BufferedImage i = null;//Hình ảnh chọn từ file
     private JLabel img;
     private String imgName = "null";
@@ -101,7 +101,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         Font font2 = new Font("Tahoma", Font.PLAIN, 25);
 
 
-           LoaiModel loaiModel1 = listCategory();
+        LoaiModel loaiModel1 = listCategory();
 //        LoaiModel loaiModel2 = listLoai();
 
         /**
@@ -151,7 +151,6 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         cmbLoai = new JComboBox<>(loaiModel1);
         cmbLoai.setFont(font0);
         cmbLoai.setBounds(new Rectangle(100, 180, 220, 30));
-
 
 
         img = new JLabel("Thêm hình");
@@ -301,11 +300,14 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                 int i = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Thông Báo Xác Nhận", JOptionPane.YES_NO_OPTION);
                 if (i == 0) {
                     System.out.println(txtId.getText());
-                    spBUS.delete(txtId.getText());
-                    JOptionPane.showMessageDialog(null, "Xóa sản phẩm thành công !!!");
+                    boolean result = prBLL.delete(txtId.getText());
+                    if (result)
+                        JOptionPane.showMessageDialog(null, "Xóa sản phẩm thành công !!!");
+                    else
+                        JOptionPane.showMessageDialog(null, "Xóa sản phẩm thất bại !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     cleanView();
                     tbl.clearSelection();
-                    outModel(model, (ArrayList<Product>) spBUS.getListProduct());
+                    outModel(model, (ArrayList<Product>) prBLL.getListProduct());
                 }
             }
         });
@@ -331,7 +333,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                 btnBack.setVisible(true);
                 btnFile.setVisible(true);
 
-               tbl.clearSelection();
+                tbl.clearSelection();
                 tbl.setEnabled(false);
             }
         });
@@ -391,64 +393,67 @@ public class SanPhamGUI extends JPanel implements KeyListener {
                     i = JOptionPane.showConfirmDialog(null, "Xác nhận thêm sản phẩm", "", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {
                         //Lấy dữ liệu từ TextField
-                        String tenSP = txtTenSP.getText();
-                        float gia = txtGia.getText().equals("") ? 0 : Float.parseFloat(txtGia.getText());
-                        String mota = txtMT.getText();
+                        String nameSP = txtTenSP.getText();
+                        float price = txtGia.getText().equals("") ? 0 : Float.parseFloat(txtGia.getText());
+                        String description = txtMT.getText();
                         Category loai = (Category) cmbLoai.getSelectedItem();
-                        //gán loại tạm
-                      //  Category loai=new Category(1,"Bánh Đàn");
-                        int maLoai = loai.getId();
                         String IMG = imgName;
+
                         //Upload sản phẩm lên DAO và BUS
-                        if (tenSP.equals("") || gia == 0 || mota.equals("") || IMG.equals("") || maLoai == 0) {
-                          JOptionPane.showMessageDialog(null,"Bạn chưa nhập đủ thông tin để thêm sản phẩm !!!");
+                        if (nameSP.equals("") || price == 0 || description.equals("") || IMG.equals("") || loai == null) {
+                            JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin để thêm sản phẩm !!!");
                             return;
                         }
                         Product sp = new Product();
                         sp.setCategory(loai);
-                        sp.setName(tenSP);
-                        sp.setDescription(mota);
+                        sp.setName(nameSP);
+                        sp.setDescription(description);
                         sp.setAmount(10);
-                        sp.setPrice(gia);
+                        sp.setPrice(price);
                         sp.setImage(IMG);
-                        spBUS.add(sp);
-                        outModel(model, (ArrayList<Product>) spBUS.getListProduct());// Load lại table
-                        saveIMG();// Lưu hình ảnh
-                        JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công !!!");
-                        cleanView();
+
+                        if (prBLL.add(sp)) {
+                            outModel(model, (ArrayList<Product>) prBLL.getListProduct());// Load lại table
+                            saveIMG();// Lưu hình ảnh
+                            JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công !!!");
+                            cleanView();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Thêm sản phẩm thất bại !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        }
+
                     }
                 } else // Edit Sản phẩm
                 {
                     i = JOptionPane.showConfirmDialog(null, "Xác nhận sửa sản phẩm", "", JOptionPane.YES_NO_OPTION);
                     if (i == 0) {
                         //Lấy dữ liệu từ TextField
-                        int maSP = Integer.parseInt(txtId.getText());
-                        String tenSP = txtTenSP.getText();
-                        float gia = Float.parseFloat(txtGia.getText());
-                        String mota = txtMT.getText();
-
-                       Category loai = (Category) cmbLoai.getSelectedItem();
-                       /// Category loai=new Category(3,"Cà Phê Pha Máy");
-                        int maLoai = loai.getId();
-
+                        String nameSP = txtTenSP.getText();
+                        float price = txtGia.getText().equals("") ? 0 : Float.parseFloat(txtGia.getText());
+                        String description = txtMT.getText();
+                        Category loai = (Category) cmbLoai.getSelectedItem();
                         String IMG = imgName;
-                        if (tenSP.equals("") || gia == 0 || IMG.equals("") || maLoai == 0) {
-                          JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin để sửa sản phẩm");
+
+                        //Upload sản phẩm lên DAO và BUS
+                        if (nameSP.equals("") || price == 0 || description.equals("") || IMG.equals("") || loai == null) {
+                            JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin để thêm sản phẩm !!!");
                             return;
                         }
-                        //Upload sản phẩm lên DAO và BUS
                         Product sp = new Product();
                         sp.setCategory(loai);
-                        sp.setName(tenSP);
-                        sp.setDescription(mota);
+                        sp.setName(nameSP);
+                        sp.setDescription(description);
                         sp.setAmount(10);
-                        sp.setPrice(gia);
+                        sp.setPrice(price);
                         sp.setImage(IMG);
-                        sp.setId(maSP);
-                        spBUS.update(sp);
-                        outModel(model, (ArrayList<Product>) spBUS.getListProduct());// Load lại table
-                        saveIMG();// Lưu hình ảnh
-                        JOptionPane.showMessageDialog(null, "Sửa sản phẩm thành công");
+                        if (prBLL.update(sp)) {
+                            outModel(model, (ArrayList<Product>) prBLL.getListProduct());// Load lại table
+                            saveIMG();// Lưu hình ảnh
+                            JOptionPane.showMessageDialog(null, "Sửa sản phẩm thành công");
+                            cleanView();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Sửa sản phẩm thất bại !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        }
+
                     }
                 }
             }
@@ -751,14 +756,13 @@ public class SanPhamGUI extends JPanel implements KeyListener {
     public void loadListProduct() // Chép ArrayList lên table
     {
         try {
-            if (spBUS.getListProduct() == null) {
-                spBUS.loadData();
+            if (prBLL.getListProduct() == null) {
+                prBLL.loadData();
             }
-            ArrayList<Product> sp = (ArrayList<Product>) spBUS.getListProduct();
+            ArrayList<Product> pr = (ArrayList<Product>) prBLL.getListProduct();
             model.setRowCount(0);
-            outModel(model, sp);
-        }
-        catch (Exception e) {
+            outModel(model, pr);
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Không Thể Lấy Thông Tin Danh Sách Sản Phẩm");
         }
     }
@@ -821,7 +825,7 @@ public class SanPhamGUI extends JPanel implements KeyListener {
         int max = txtMaxPrice.getText().equals("") ? 999999999 : Integer.parseInt(txtMaxPrice.getText());
         int min = txtMinPrice.getText().equals("") ? 0 : Integer.parseInt(txtMinPrice.getText());
 
-       outModel(model, spBUS.searchProduct(masp, maloai, max, min));
+        outModel(model, prBLL.searchProduct(masp, maloai, max, min));
     }
 
     private void setEdit(boolean flag) {

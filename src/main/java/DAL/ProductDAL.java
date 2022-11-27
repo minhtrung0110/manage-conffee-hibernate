@@ -49,9 +49,9 @@ public class ProductDAL {
         }
         return product;
     }
-    public int insertProdct(Product product){
+    public boolean insertProdct(Product product){
         Session session = factory.openSession();
-        int result = 1;
+        boolean result = true;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -61,16 +61,15 @@ public class ProductDAL {
             if (tx != null) tx.rollback();
 
             e.printStackTrace();
-            return 0;
+            return false;
         } finally {
             session.close();
         }
         return result;
     }
-    public int updateProduct(Product product){
-        System.out.println("A - "+product);
+    public boolean updateProduct(Product product){
         Session session = factory.openSession();
-        int result = 0;
+        boolean result=false;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -86,40 +85,38 @@ public class ProductDAL {
             query.setParameter("price", product.getPrice());
             query.setParameter("amount", product.getAmount());
             query.setParameter("image", product.getImage());
-            System.out.println(hql);
-            result = query.executeUpdate();
-           System.out.println("Rows affected: " + result);
-           // session.update(product);
+             query.executeUpdate();
+            result =true;
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
+            result=false;
+
         } finally {
             session.close();
         }
 
         return result;
     }
-    public int deleteProduct(int id){
+    public boolean deleteProduct(int id){
         Session session = factory.openSession();
-        int result = 0;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
             String hql = "DELETE FROM Product WHERE id = :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            result = query.executeUpdate();
-          //  System.out.println("Rows affected: " + result);
-
+             query.executeUpdate();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
+            return false;
         } finally {
             session.close();
         }
-        return result;
+        return true;
     }
     
     public long getCount(){

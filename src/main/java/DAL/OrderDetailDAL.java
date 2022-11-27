@@ -1,7 +1,7 @@
 package DAL;
 
 import BLL.OrderBLL;
-import BLL.SanPhamBLL;
+import BLL.ProductBLL;
 import hibernate.entities.Order;
 import hibernate.entities.OrderDetail;
 import hibernate.entities.Product;
@@ -128,7 +128,7 @@ public class OrderDetailDAL {
         OrderBLL odbll = new OrderBLL();
         Order order = odbll.getOrderById(1);
 
-        SanPhamBLL spbll = new SanPhamBLL();
+        ProductBLL spbll = new ProductBLL();
         Product product = spbll.getProductById(2);
 
         OrderDetailDAL dal = new OrderDetailDAL();

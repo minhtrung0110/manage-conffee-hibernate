@@ -1,14 +1,11 @@
 package BLL;
 
 import DAL.OrderDetailDAL;
-import DAL.ProductDAL;
 import hibernate.entities.Order;
 import hibernate.entities.OrderDetail;
 import hibernate.entities.Product;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class OrderDetailBLL {
@@ -89,7 +86,7 @@ public class OrderDetailBLL {
         OrderBLL odbll = new OrderBLL();
         Order order = odbll.getOrderById(1);
 
-        SanPhamBLL spbll = new SanPhamBLL();
+        ProductBLL spbll = new ProductBLL();
         Product product = spbll.getProductById(7);
 
         OrderDetail orderDetail = new OrderDetail(4,order, product,product.getName(), 2, 10000);

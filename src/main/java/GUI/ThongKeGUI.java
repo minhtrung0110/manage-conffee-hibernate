@@ -9,7 +9,7 @@ package GUI;
 
 
 import BLL.LoaiBLL;
-import BLL.SanPhamBLL;
+import BLL.ProductBLL;
 import BLL.OrderBLL;
 import hibernate.entities.Order;
 import java.awt.CardLayout;
@@ -39,7 +39,7 @@ public class ThongKeGUI extends JPanel{
     private int DEFAUTL_WIDTH;
     private JLabel lbDateStart,lbDateEnd;
     private JPanel panel;
-    private SanPhamBLL pro_bll=new SanPhamBLL();
+    private ProductBLL pro_bll=new ProductBLL();
     private LoaiBLL cate_bll=new LoaiBLL();
     private OrderBLL or_bll=new OrderBLL();
     private OrderBLL HD=new OrderBLL();

@@ -30,7 +30,7 @@ import hibernate.entities.Product;
 /**
  * @author Asus
  */
-public class SanPhamBLL {
+public class ProductBLL {
 
     private static List<Product> listProduct;
     private ProductDAL dal = new ProductDAL();
@@ -46,13 +46,16 @@ public class SanPhamBLL {
         listProduct = dal.getAllProduct("ASC");
     }
 
-    public void add(Product spDTO) {
+    public boolean add(Product spDTO) {
+        boolean result;
         try {
-            dal.insertProdct(spDTO);
+            result= dal.insertProdct(spDTO);
             listProduct.add(spDTO);
         } catch (Exception e) {
+            result=false;
             e.printStackTrace();
         }
+        return result;
     }
 
     public List<Product> searchCourseWithName(String name) {
@@ -92,34 +95,39 @@ public class SanPhamBLL {
         return null;
     }
 
-    public void delete(String id) {
-
+    public boolean delete(String id) {
         int idSP = Integer.parseInt(id);
         for(int i = 0 ; i < listProduct.size() ; i++){
             if (listProduct.get(i).getId() == idSP) {
                 try {
-
                    dal.deleteProduct(idSP);
                     listProduct.remove(i);
+                    return true;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
+        return false;
+
     }
 
-    public void update(Product spDTO) {
-        for (int i = 0; i < listProduct.size(); i++) {
-            if (listProduct.get(i).getId() == spDTO.getId()) {
-                try {
-                   dal.updateProduct(spDTO);
-                    listProduct.set(i, spDTO);
+    public boolean update(Product spDTO) {
+        boolean result=false;
+            for (int i = 0; i < listProduct.size(); i++) {
+                if (listProduct.get(i).getId() == spDTO.getId()) {
+                    try {
+                        dal.updateProduct(spDTO);
+                        listProduct.set(i, spDTO);
+                        result = true;
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        result = false;
+                    }
                 }
             }
-        }
+        return result;
     }
 
 //    public Product getSP(String masp) {

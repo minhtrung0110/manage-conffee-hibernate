@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import BLL.SanPhamBLL;
+import BLL.ProductBLL;
 import hibernate.entities.Product;
 
 import java.awt.Color;
@@ -43,7 +43,7 @@ import javax.swing.table.TableRowSorter;
 class SuggestSanPham extends JDialog {
 
     private String maSP;
-    private SanPhamBLL spBUS = new SanPhamBLL();
+    private ProductBLL spBUS = new ProductBLL();
     private JTextField txtMaSP, txtTenSP, txtGia, txtDVT;
     private String img;
     private DefaultTableModel model;
